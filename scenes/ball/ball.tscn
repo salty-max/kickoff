@@ -70,6 +70,11 @@ radius = 4.0
 collision_layer = 4
 script = ExtResource("1_stoaj")
 
+[node name="Shadow" type="Sprite2D" parent="."]
+texture = ExtResource("2_stoaj")
+centered = false
+offset = Vector2(-8, -16)
+
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_nv6q1")
 centered = false
@@ -85,11 +90,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_r8c1m")
 }
 autoplay = "idle"
-
-[node name="Shadow" type="Sprite2D" parent="."]
-texture = ExtResource("2_stoaj")
-centered = false
-offset = Vector2(-8, -16)
 
 [node name="PlayerDetectionArea" type="Area2D" parent="."]
 position = Vector2(0, -5)

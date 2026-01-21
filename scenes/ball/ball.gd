@@ -8,6 +8,7 @@ enum State {
 }
 
 @onready var player_detection_area: Area2D = $PlayerDetectionArea
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var velocity := Vector2.ZERO
 var state_factory := BallStateFactory.new()
@@ -30,3 +31,11 @@ func switch_state(state: Ball.State) -> void:
 	current_state.name = str("State: ", Ball.State.keys()[state])
 	
 	call_deferred("add_child", current_state)
+	
+	
+func update_animation(anim_name: String, backwards: bool = false) -> void:
+	assert(animation_player.has_animation(anim_name), str("No animation named %s for Ball", [anim_name]))
+	if backwards:
+		animation_player.play_backwards(anim_name)
+	else:
+		animation_player.play(anim_name)
