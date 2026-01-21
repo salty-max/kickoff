@@ -10,11 +10,15 @@ enum ControlScheme {
 enum State {
 	MOVING,
 	TACKLING,
-	RECOVERING
+	RECOVERING,
+	PREPPING_SHOT,
+	SHOOTING
 }
 
 @export var control_scheme: ControlScheme
 @export var speed: float = 80.0
+@export var power: float = 70.0
+@export var ball: Ball
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
@@ -68,3 +72,6 @@ func update_animation(anim_name: String) -> void:
 	assert(animation_player.has_animation(anim_name), str("No animation named %s for Player", [anim_name]))
 	animation_player.play(anim_name)
 		
+		
+func has_ball() -> bool:
+	return ball.carrier == self
