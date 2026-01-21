@@ -12,6 +12,7 @@ func _enter_tree() -> void:
 	time_start_shot = Time.get_ticks_msec()
 	player.velocity = Vector2.ZERO
 	player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.PREP_KICK))
+	shot_direction = player.facing
 	
 	
 func _physics_process(delta: float) -> void:
