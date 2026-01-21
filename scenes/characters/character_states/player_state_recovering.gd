@@ -1,0 +1,17 @@
+class_name PlayerStateRecovering
+extends PlayerState
+
+const RECOVERY_DURATION := 500
+
+var time_start_recovery := Time.get_ticks_msec()
+
+
+func _enter_tree() -> void:
+	time_start_recovery = Time.get_ticks_msec()
+	player.velocity = Vector2.ZERO
+	player.update_animation("recover")
+
+
+func _process(_delta: float) -> void:
+	if Time.get_ticks_msec() - time_start_recovery > RECOVERY_DURATION:
+		state_transition_requested.emit(Player.State.MOVING)

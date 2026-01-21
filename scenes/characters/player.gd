@@ -7,6 +7,12 @@ enum ControlScheme {
 	P2
 }
 
+enum State {
+	MOVING,
+	TACKLING,
+	RECOVERING
+}
+
 @export var control_scheme: ControlScheme
 @export var speed: float = 80.0
 
@@ -14,33 +20,34 @@ enum ControlScheme {
 @onready var sprite: Sprite2D = $Sprite
 
 var facing := Vector2.RIGHT
+var current_state: PlayerState = null
+var state_factory := PlayerStateFactory.new()
+
+
+func _ready() -> void:
+	switch_state(State.MOVING)
 
 
 func _process(_delta: float) -> void:
-	if control_scheme == ControlScheme.CPU:
-		pass
-	else:
-		handle_input()
-		
-	set_movement_animation()
 	set_facing()
-	flip_sprite()
+	flip_sprites()
 	
 	
 func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 	
-func handle_input() -> void:
-	var direction := KeyUtils.get_input_vector(control_scheme)
-	velocity = direction * speed
+func switch_state(state: State) -> void:
+	if current_state != null:
+		remove_child(current_state)
+		current_state.queue_free()
 	
+	current_state = state_factory.get_fresh_state(state)
+	current_state.setup(self)
+	current_state.state_transition_requested.connect(switch_state.bind())
+	current_state.name = "PlayerStateMachine: " + str(state)
 	
-func set_movement_animation() -> void:
-	if velocity.length() > 0:
-		animation_player.play("run")
-	else:
-		animation_player.play("idle")
+	call_deferred("add_child", current_state)
 		
 		
 func set_facing() -> void:
@@ -50,9 +57,14 @@ func set_facing() -> void:
 		facing = Vector2.LEFT
 		
 		
-func flip_sprite() -> void:
+func flip_sprites() -> void:
 	if facing == Vector2.RIGHT:
 		sprite.flip_h = false
 	else:
 		sprite.flip_h = true
 	
+
+func update_animation(anim_name: String) -> void:
+	assert(animation_player.has_animation(anim_name), str("No animation named %s for Player", [anim_name]))
+	animation_player.play(anim_name)
+		
