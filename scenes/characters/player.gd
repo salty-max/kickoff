@@ -45,7 +45,7 @@ func switch_state(state: State) -> void:
 	current_state = state_factory.get_fresh_state(state)
 	current_state.setup(self)
 	current_state.state_transition_requested.connect(switch_state.bind())
-	current_state.name = "PlayerStateMachine: " + str(state)
+	current_state.name = str("State: ", Player.State.keys()[state])
 	
 	call_deferred("add_child", current_state)
 		

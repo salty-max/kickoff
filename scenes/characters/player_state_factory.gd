@@ -1,5 +1,4 @@
 class_name PlayerStateFactory
-extends Node
 
 var states: Dictionary
 
@@ -13,5 +12,5 @@ func _init() -> void:
 	
 	
 func get_fresh_state(state: Player.State) -> PlayerState:
-	assert(states.has(state), "State doesn't exist")
+	assert(states.has(state), "Player: State doesn't exist")
 	return states.get(state).new()
