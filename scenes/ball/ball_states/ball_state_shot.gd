@@ -2,14 +2,14 @@ class_name BallStateShot
 extends BallState
 
 const SHOT_SPRITE_SCALE := 0.8
-const SHOT_HEIGHT := 5.0
-const RISE_SPEED := 5.0  # Higher value = faster climb
+const SHOT_HEIGHT := 8.0
+const RISE_SPEED := 10.0
 const SHOT_DURATION := 1000.0
 
 var elapsed_time := Time.get_ticks_msec()
 
 func _enter_tree() -> void:
-	ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.ROLL), ball.velocity.x < 0)
+	set_ball_anim_from_velocity()
 	ball.sprite.scale.y = SHOT_SPRITE_SCALE
 	elapsed_time = Time.get_ticks_msec()
 	

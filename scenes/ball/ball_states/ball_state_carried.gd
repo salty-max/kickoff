@@ -24,5 +24,6 @@ func _physics_process(delta: float) -> void:
 			
 	else:
 		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.IDLE))
-		
+	
+	process_gravity(delta)
 	ball.position = carrier.position + Vector2(vx + carrier.facing.x * OFFSET_FROM_PLAYER.x, OFFSET_FROM_PLAYER.y)

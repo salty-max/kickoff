@@ -18,6 +18,7 @@ enum State {
 
 var velocity := Vector2.ZERO
 var height := 0.0
+var height_velocity := 0.0
 var state_factory := BallStateFactory.new()
 var current_state: BallState = null
 
