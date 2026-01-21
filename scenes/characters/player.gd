@@ -41,13 +41,13 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 	
-func switch_state(state: State) -> void:
+func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.new()) -> void:
 	if current_state != null:
 		remove_child(current_state)
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self)
+	current_state.setup(self, ball, state_data)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Player.State.keys()[state])
 	
@@ -74,4 +74,9 @@ func update_animation(anim_name: String) -> void:
 		
 		
 func has_ball() -> bool:
-	return ball.carrier == self
+	return ball.current_state.state_data.carrier == self
+	
+	
+func _on_animation_complete() -> void:
+	if current_state != null:
+		current_state.on_animation_complete()

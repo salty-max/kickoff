@@ -14,14 +14,14 @@ func handle_movement() -> void:
 	player.velocity = direction * player.speed
 	
 	if player.has_ball() and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-		state_transition_requested.emit(Player.State.PREPPING_SHOT)
+		transition_to(Player.State.PREPPING_SHOT)
 	
 	#if player.velocity != Vector2.ZERO and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-		#state_transition_requested.emit(Player.State.TACKLING)
+		#transition_to(Player.State.TACKLING)
 	
 	
 func set_movement_animation() -> void:
 	if player.velocity.length() > 0:
-		player.update_animation("run")
+		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.RUN))
 	else:
-		player.update_animation("idle")
+		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.IDLE))

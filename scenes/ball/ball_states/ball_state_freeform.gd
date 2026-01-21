@@ -7,5 +7,5 @@ func _enter_tree() -> void:
 	
 	
 func _on_player_entered(body: Player) -> void:
-	ball.carrier = body
-	state_transition_requested.emit(Ball.State.CARRIED)
+	var data := BallStateData.build().set_carrier(body)
+	transition_to(Ball.State.CARRIED, data)

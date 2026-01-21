@@ -6,31 +6,27 @@ enum Action {
 	UP,
 	DOWN,
 	PASS,
-	SHOOT
+	SHOOT,
 }
 
-var ACTIONS_MAP: Dictionary
-
-
-func _init() -> void:
-	ACTIONS_MAP = {
-		Player.ControlScheme.P1: {
-			Action.LEFT: "p1_left",
-			Action.RIGHT: "p1_right",
-			Action.UP: "p1_up",
-			Action.DOWN: "p1_down",
-			Action.PASS: "p1_pass",
-			Action.SHOOT: "p1_shoot",
-		},
-		Player.ControlScheme.P2: {
-			Action.LEFT: "p2_left",
-			Action.RIGHT: "p2_right",
-			Action.UP: "p2_up",
-			Action.DOWN: "p2_down",
-			Action.PASS: "p2_pass",
-			Action.SHOOT: "p2_shoot",
-		}
-	}	
+const ACTIONS_MAP: Dictionary = {
+	Player.ControlScheme.P1: {
+		Action.LEFT: "p1_left",
+		Action.RIGHT: "p1_right",
+		Action.UP: "p1_up",
+		Action.DOWN: "p1_down",
+		Action.PASS: "p1_pass",
+		Action.SHOOT: "p1_shoot",
+	},
+	Player.ControlScheme.P2: {
+		Action.LEFT: "p2_left",
+		Action.RIGHT: "p2_right",
+		Action.UP: "p2_up",
+		Action.DOWN: "p2_down",
+		Action.PASS: "p2_pass",
+		Action.SHOOT: "p2_shoot",
+	}
+}	
 
 
 func get_input_vector(scheme: Player.ControlScheme) -> Vector2:

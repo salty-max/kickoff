@@ -11,7 +11,7 @@ var time_start_shot = Time.get_ticks_msec()
 func _enter_tree() -> void:
 	time_start_shot = Time.get_ticks_msec()
 	player.velocity = Vector2.ZERO
-	player.update_animation("prep_kick")
+	player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.PREP_KICK))
 	
 	
 func _physics_process(delta: float) -> void:
@@ -24,4 +24,6 @@ func _physics_process(delta: float) -> void:
 		var shot_power: float = player.power * (1 + bonus)
 		
 		shot_direction = shot_direction.normalized()
-		print(shot_power, shot_direction)
+		
+		var data := PlayerStateData.build().set_shot_direction(shot_direction).set_shot_power(shot_power)
+		transition_to(Player.State.SHOOTING, data)

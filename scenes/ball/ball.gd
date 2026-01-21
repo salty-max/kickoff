@@ -7,30 +7,53 @@ enum State {
 	SHOT
 }
 
+@export var max_height_reference := 100.0 # Height at which shadow is smallest
+@export var min_shadow_scale := 0.4
+@export var max_shadow_scale := 1.0
+
 @onready var player_detection_area: Area2D = $PlayerDetectionArea
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Sprite
+@onready var shadow: Sprite2D = $Shadow
 
 var velocity := Vector2.ZERO
+var height := 0.0
 var state_factory := BallStateFactory.new()
 var current_state: BallState = null
-var carrier: Player = null
 
 
 func _ready() -> void:
 	switch_state(State.FREEFORM)
+	
+	
+func _process(_delta: float) -> void:
+	sprite.position = Vector2.UP * height
+	
+	# Calculate shadow scale
+	# As height goes from 0 to max_height_reference, 
+	# scale goes from max_shadow_scale down to min_shadow_scale
+	var shadow_factor = clamp(height / max_height_reference, 0.0, 1.0)
+	var s = lerp(max_shadow_scale, min_shadow_scale, shadow_factor)
+	
+	shadow.scale = Vector2(s, s)
 
 
-func switch_state(state: Ball.State) -> void:
+func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.new()) -> void:
 	if current_state != null:
 		remove_child(current_state)
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self, carrier, player_detection_area)
+	current_state.setup(self, state_data, player_detection_area)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Ball.State.keys()[state])
 	
 	call_deferred("add_child", current_state)
+	
+	
+func shoot(shot_velocity: Vector2) -> void:
+	velocity = shot_velocity
+	switch_state(Ball.State.SHOT)
 	
 	
 func update_animation(anim_name: String, backwards: bool = false) -> void:
