@@ -9,7 +9,11 @@ func _enter_tree() -> void:
 	
 func on_animation_complete() -> void:
 	var pass_target := _find_teammate_in_view()
-	ball.pass_to(pass_target.position)
+	if not pass_target:
+		ball.pass_to(ball.position + player.facing * player.speed)
+	else:
+		ball.pass_to(pass_target.position + pass_target.velocity)
+		
 	transition_to(Player.State.MOVING)
 	
 	
