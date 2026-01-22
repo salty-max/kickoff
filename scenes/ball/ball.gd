@@ -45,7 +45,8 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self, state_data, player_detection_area)
+	var ctx := BallStateContext.build().set_ball(self).set_player_detection_area(player_detection_area).set_state_data(state_data)
+	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Ball.State.keys()[state])
 	

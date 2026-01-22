@@ -10,10 +10,10 @@ var state_data: BallStateData
 var player_detection_area: Area2D = null
 
 
-func setup(_ball: Ball, _state_data: BallStateData, _detection_area: Area2D) -> void:
-	ball = _ball
-	state_data = _state_data
-	player_detection_area = _detection_area
+func setup(ctx: BallStateContext) -> void:
+	ball = ctx.ball
+	state_data = ctx.state_data
+	player_detection_area = ctx.player_detection_area
 
 
 func transition_to(new_state: Ball.State, data: BallStateData = BallStateData.new()) -> void:

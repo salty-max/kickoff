@@ -9,10 +9,11 @@ enum ControlScheme {
 
 enum State {
 	MOVING,
-	TACKLING,
-	RECOVERING,
+	PASSING,
 	PREPPING_SHOT,
-	SHOOTING
+	RECOVERING,
+	SHOOTING,
+	TACKLING,
 }
 
 @export var control_scheme: ControlScheme
@@ -22,6 +23,7 @@ enum State {
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
+@onready var teammate_detection_area: Area2D = $TeammateDetectionArea
 
 var facing := Vector2.RIGHT
 var current_state: PlayerState = null
@@ -47,7 +49,8 @@ func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.ne
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self, ball, state_data)
+	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_state_data(state_data)
+	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Player.State.keys()[state])
 	

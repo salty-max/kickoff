@@ -5,13 +5,15 @@ signal state_transition_requested(new_state: Player.State, state_data: PlayerSta
 
 var player: Player = null
 var ball: Ball = null
+var teammate_detection_area: Area2D
 var state_data: PlayerStateData
 
 
-func setup(_player: Player, _ball: Ball, _state_data: PlayerStateData) -> void:
-	player = _player
-	ball = _ball
-	state_data = _state_data
+func setup(ctx: PlayerStateContext) -> void:
+	player = ctx.player
+	ball = ctx.ball
+	state_data = ctx.state_data
+	teammate_detection_area = ctx.teammate_detection_area
 	
 	
 func transition_to(new_state: Player.State, data: PlayerStateData = PlayerStateData.new()) -> void:
