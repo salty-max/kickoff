@@ -1,6 +1,12 @@
 class_name Player
 extends CharacterBody2D
 
+const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
+	ControlScheme.CPU: preload("res://assets/art/props/cpu.png"),
+	ControlScheme.P1: preload("res://assets/art/props/1p.png"),
+	ControlScheme.P2: preload("res://assets/art/props/2p.png"),
+}
+
 enum ControlScheme {
 	CPU,
 	P1,
@@ -24,6 +30,7 @@ enum State {
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
 @onready var teammate_detection_area: Area2D = $TeammateDetectionArea
+@onready var control_sprite: Sprite2D = $Sprite/ControlSprite
 
 var facing := Vector2.RIGHT
 var current_state: PlayerState = null
@@ -32,10 +39,12 @@ var state_factory := PlayerStateFactory.new()
 
 func _ready() -> void:
 	switch_state(State.MOVING)
+	set_control_texture()
 
 
 func _process(_delta: float) -> void:
 	set_facing()
+	set_sprites_visibility()
 	flip_sprites()
 	
 	
@@ -69,6 +78,14 @@ func flip_sprites() -> void:
 		sprite.flip_h = false
 	else:
 		sprite.flip_h = true
+		
+		
+func set_sprites_visibility() -> void:
+	control_sprite.visible = has_ball() or not control_scheme == ControlScheme.CPU
+		
+		
+func set_control_texture() -> void:
+	control_sprite.texture = CONTROL_SCHEME_SPRITES_MAP[control_scheme]
 	
 
 func update_animation(anim_name: String) -> void:
