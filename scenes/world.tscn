@@ -61,18 +61,22 @@ centered = false
 [node name="Actors" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Player" parent="Actors" node_paths=PackedStringArray("ball") instance=ExtResource("4_k0juu")]
-position = Vector2(169, 114)
+[node name="Player" parent="Actors" node_paths=PackedStringArray("ball", "own_goal", "target_goal") instance=ExtResource("4_k0juu")]
+position = Vector2(121, 81)
 control_scheme = 1
 ball = NodePath("../Ball")
+own_goal = NodePath("../../PitchObjects/GoalHome")
+target_goal = NodePath("../../PitchObjects/GoalAway")
 
-[node name="Player2" parent="Actors" node_paths=PackedStringArray("ball") instance=ExtResource("4_k0juu")]
-position = Vector2(195, 149)
+[node name="Player2" parent="Actors" node_paths=PackedStringArray("ball", "own_goal", "target_goal") instance=ExtResource("4_k0juu")]
+position = Vector2(122, 146)
 control_scheme = 2
 ball = NodePath("../Ball")
+own_goal = NodePath("../../PitchObjects/GoalHome")
+target_goal = NodePath("../../PitchObjects/GoalAway")
 
 [node name="Ball" parent="Actors" instance=ExtResource("5_71j4m")]
-position = Vector2(135, 93)
+position = Vector2(202, 111)
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("ball")]
 limit_left = 0

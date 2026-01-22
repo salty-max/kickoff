@@ -22,4 +22,4 @@ func _physics_process(delta: float) -> void:
 		transition_to(Ball.State.FREEFORM)
 	else:
 		move_and_bounce(delta)
-		ball.height = lerp(ball.height, Ball.SHOT_HEIGHT, RISE_SPEED * delta)
+		ball.height = lerp(state_data.shot_height, 0.0, RISE_SPEED * delta)

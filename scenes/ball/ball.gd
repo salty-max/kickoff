@@ -6,8 +6,6 @@ const GROUND_FRICTION := 250.0
 const BOUNCINESS := 0.8
 const GRAVITY := 10.0
 const DISTANCE_HIGH_PASS := 130
-const AIR_CONNECT_MIN_HEIGHT := 10.0
-const AIR_CONNECT_MAX_HEIGHT := 30.0
 const SHOT_HEIGHT := 5.0
 
 enum State {
@@ -49,8 +47,7 @@ func _process(_delta: float) -> void:
 
 
 func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.new()) -> void:
-	if current_state != null:
-		remove_child(current_state)
+	if current_state:
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
@@ -62,9 +59,10 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 	call_deferred("add_child", current_state)
 	
 	
-func shoot(shot_velocity: Vector2, height: float = SHOT_HEIGHT) -> void:
+func shoot(shot_velocity: Vector2, shot_height: float = SHOT_HEIGHT) -> void:
 	velocity = shot_velocity
-	switch_state(Ball.State.SHOT)
+	var data := BallStateData.build().set_shot_height(shot_height)
+	switch_state(Ball.State.SHOT, data)
 	
 	
 func pass_to(destination: Vector2) -> void:
@@ -93,8 +91,8 @@ func can_air_interact() -> bool:
 	return current_state and current_state.can_air_interact()
 	
 	
-func can_air_connect() -> bool:
-	return height >= AIR_CONNECT_MIN_HEIGHT and height <= AIR_CONNECT_MAX_HEIGHT
+func can_air_connect(min_height: float, max_height: float) -> bool:
+	return height >= min_height and height <= max_height
 	
 	
 func update_animation(anim_name: String, backwards: bool = false) -> void:

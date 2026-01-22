@@ -7,6 +7,7 @@ var player: Player = null
 var ball: Ball = null
 var teammate_detection_area: Area2D
 var ball_detection_area: Area2D
+var target_goal: Goal
 var state_data: PlayerStateData
 
 
@@ -15,6 +16,7 @@ func setup(ctx: PlayerStateContext) -> void:
 	ball = ctx.ball
 	state_data = ctx.state_data
 	teammate_detection_area = ctx.teammate_detection_area
+	target_goal = ctx.target_goal
 	ball_detection_area = ctx.ball_detection_area
 	
 	

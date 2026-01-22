@@ -6,6 +6,7 @@ var ball: Ball
 var teammate_detection_area: Area2D
 var ball_detection_area: Area2D
 var state_data: PlayerStateData
+var target_goal: Goal
 
 
 static func build() -> PlayerStateContext:
@@ -29,6 +30,11 @@ func set_teammate_detection_area(_teammate_detection_area: Area2D) -> PlayerStat
 	
 func set_ball_detection_area(_ball_detection_area: Area2D) -> PlayerStateContext:
 	ball_detection_area = _ball_detection_area
+	return self
+	
+	
+func set_target_goal(_goal: Goal) -> PlayerStateContext:
+	target_goal = _goal
 	return self
 	
 	

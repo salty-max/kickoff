@@ -22,7 +22,10 @@ func handle_movement() -> void:
 			transition_to(Player.State.PASSING)
 	elif ball.can_air_interact() and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
 		if player.velocity == Vector2.ZERO:
-			pass
+			if is_facing_target_goal():
+				transition_to(Player.State.VOLLEY)
+			else:
+				transition_to(Player.State.BICYCLE)
 		else:
 			transition_to(Player.State.HEADER)
 	
@@ -35,3 +38,8 @@ func set_movement_animation() -> void:
 		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.RUN))
 	else:
 		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.IDLE))
+		
+		
+func is_facing_target_goal() -> bool:
+	var direction_to_target_goal = player.position.direction_to(target_goal.position)
+	return player.facing.dot(direction_to_target_goal) > 0
