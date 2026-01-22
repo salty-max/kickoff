@@ -3,8 +3,6 @@ extends Node
 
 signal state_transition_requested(new_state: Ball.State, state_data: BallStateData)
 
-const GRAVITY := 10.0
-
 var ball: Ball = null
 var state_data: BallStateData
 var player_detection_area: Area2D = null
@@ -29,7 +27,7 @@ func set_ball_anim_from_velocity() -> void:
 		
 func process_gravity(delta: float, bounciness: float = 0.0) -> void:
 	if ball.height > 0 or ball.height_velocity > 0:
-		ball.height_velocity -= GRAVITY * delta
+		ball.height_velocity -= Ball.GRAVITY * delta
 		ball.height += ball.height_velocity
 		if ball.height < 0:
 			ball.height = 0
@@ -40,6 +38,10 @@ func process_gravity(delta: float, bounciness: float = 0.0) -> void:
 				
 func move_and_bounce(delta: float) -> void:
 	var collision := ball.move_and_collide(ball.velocity * delta)
-	if collision:
+	if collision != null:
 		ball.velocity = ball.velocity.bounce(collision.get_normal()) * Ball.BOUNCINESS
 		ball.switch_state(Ball.State.FREEFORM)
+		
+		
+func can_air_interact() -> bool:
+	return false

@@ -15,7 +15,7 @@ func _enter_tree() -> void:
 	shot_direction = player.facing
 	
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	shot_direction += KeyUtils.get_input_vector(player.control_scheme) * delta
 	
 	if KeyUtils.is_action_just_released(player.control_scheme, KeyUtils.Action.SHOOT):

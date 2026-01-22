@@ -7,9 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_xotqv"]
 radius = 5.0
 
-[sub_resource type="Animation" id="Animation_jbgth"]
-resource_name = "idle"
-length = 0.1
+[sub_resource type="Animation" id="Animation_yjhvv"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -23,8 +22,9 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_yjhvv"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_jbgth"]
+resource_name = "idle"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -100,4 +100,4 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
 shape = SubResource("CircleShape2D_rp1mh")
-debug_color = Color(0.34996516, 0.6119861, 0.28819564, 0.41960785)
+debug_color = Color(0.36479428, 0.60683644, 0.32373077, 0.41960785)

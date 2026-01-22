@@ -7,6 +7,8 @@ const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.P2: preload("res://assets/art/props/2p.png"),
 }
 
+const GRAVITY := 8.0
+
 enum ControlScheme {
 	CPU,
 	P1,
@@ -14,12 +16,15 @@ enum ControlScheme {
 }
 
 enum State {
+	BICYCLE,
+	HEADER,
 	MOVING,
 	PASSING,
 	PREPPING_SHOT,
 	RECOVERING,
 	SHOOTING,
 	TACKLING,
+	VOLLEY,
 }
 
 @export var control_scheme: ControlScheme
@@ -29,10 +34,13 @@ enum State {
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
-@onready var teammate_detection_area: Area2D = $TeammateDetectionArea
 @onready var control_sprite: Sprite2D = $Sprite/ControlSprite
+@onready var teammate_detection_area: Area2D = $TeammateDetectionArea
+@onready var ball_detection_area: Area2D = $BallDetectionArea
 
 var facing := Vector2.RIGHT
+var height := 0.0
+var height_velocity := 0.0
 var current_state: PlayerState = null
 var state_factory := PlayerStateFactory.new()
 
@@ -42,12 +50,22 @@ func _ready() -> void:
 	set_control_texture()
 
 
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	set_facing()
 	set_sprites_visibility()
 	flip_sprites()
+	process_gravity(delta)
 	move_and_slide()
-	
+
+
+func process_gravity(delta: float) -> void:
+	if height > 0:
+		height_velocity -= GRAVITY * delta
+		height += height_velocity
+		if height < 0:
+			height = 0
+			
+	sprite.position = Vector2.UP * height
 	
 	
 func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.new()) -> void:
@@ -56,7 +74,7 @@ func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.ne
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_state_data(state_data)
+	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_ball_detection_area(ball_detection_area).set_state_data(state_data)
 	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Player.State.keys()[state])

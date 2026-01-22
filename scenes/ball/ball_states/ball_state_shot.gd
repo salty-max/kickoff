@@ -2,7 +2,6 @@ class_name BallStateShot
 extends BallState
 
 const SHOT_SPRITE_SCALE := 0.8
-const SHOT_HEIGHT := 8.0
 const RISE_SPEED := 10.0
 const SHOT_DURATION := 1000.0
 
@@ -18,9 +17,9 @@ func _exit_tree() -> void:
 	ball.sprite.scale.y = 1.0
 	
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Time.get_ticks_msec() - elapsed_time > SHOT_DURATION:
 		transition_to(Ball.State.FREEFORM)
 	else:
 		move_and_bounce(delta)
-		ball.height = lerp(ball.height, SHOT_HEIGHT, RISE_SPEED * delta)
+		ball.height = lerp(ball.height, Ball.SHOT_HEIGHT, RISE_SPEED * delta)

@@ -11,7 +11,7 @@ func _ready() -> void:
 	assert(state_data.carrier != null, "Ball should have a carrier when entering CARRIED state")
 	
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var carrier = state_data.carrier
 	var vx := 0.0
 	dribble_time += delta

@@ -5,12 +5,15 @@ var states: Dictionary
 
 func _init() -> void:
 	states = {
+		Player.State.BICYCLE: PlayerStateBicycle,
+		Player.State.HEADER: PlayerStateHeader,
 		Player.State.MOVING: PlayerStateMoving,
 		Player.State.PASSING: PlayerStatePassing,
 		Player.State.PREPPING_SHOT: PlayerStatePreppingShot,
 		Player.State.RECOVERING: PlayerStateRecovering,
 		Player.State.SHOOTING: PlayerStateShooting,
 		Player.State.TACKLING: PlayerStateTackling,
+		Player.State.VOLLEY: PlayerStateVolley
 	}
 	
 	

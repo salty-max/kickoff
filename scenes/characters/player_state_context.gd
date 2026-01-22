@@ -4,6 +4,7 @@ extends RefCounted
 var player: Player
 var ball: Ball
 var teammate_detection_area: Area2D
+var ball_detection_area: Area2D
 var state_data: PlayerStateData
 
 
@@ -23,6 +24,11 @@ func set_ball(_ball: Ball) -> PlayerStateContext:
 	
 func set_teammate_detection_area(_teammate_detection_area: Area2D) -> PlayerStateContext:
 	teammate_detection_area = _teammate_detection_area
+	return self
+	
+	
+func set_ball_detection_area(_ball_detection_area: Area2D) -> PlayerStateContext:
+	ball_detection_area = _ball_detection_area
 	return self
 	
 	

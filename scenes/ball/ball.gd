@@ -4,6 +4,11 @@ extends AnimatableBody2D
 const AIR_FRICTION := 35.0
 const GROUND_FRICTION := 250.0
 const BOUNCINESS := 0.8
+const GRAVITY := 10.0
+const DISTANCE_HIGH_PASS := 130
+const AIR_CONNECT_MIN_HEIGHT := 10.0
+const AIR_CONNECT_MAX_HEIGHT := 30.0
+const SHOT_HEIGHT := 5.0
 
 enum State {
 	CARRIED,
@@ -57,7 +62,7 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 	call_deferred("add_child", current_state)
 	
 	
-func shoot(shot_velocity: Vector2) -> void:
+func shoot(shot_velocity: Vector2, height: float = SHOT_HEIGHT) -> void:
 	velocity = shot_velocity
 	switch_state(Ball.State.SHOT)
 	
@@ -67,6 +72,8 @@ func pass_to(destination: Vector2) -> void:
 	var distance := position.distance_to(destination)
 	var intensity := sqrt(2 * distance * GROUND_FRICTION)
 	velocity = direction * intensity
+	if distance > DISTANCE_HIGH_PASS:
+		height_velocity = Ball.GRAVITY * distance / (1.8 * intensity)
 	switch_state(Ball.State.FREEFORM)
 	
 	
@@ -80,6 +87,14 @@ func has_carrier() -> bool:
 	
 func get_carrier() -> Player:
 	return current_state.state_data.carrier
+	
+	
+func can_air_interact() -> bool:
+	return current_state and current_state.can_air_interact()
+	
+	
+func can_air_connect() -> bool:
+	return height >= AIR_CONNECT_MIN_HEIGHT and height <= AIR_CONNECT_MAX_HEIGHT
 	
 	
 func update_animation(anim_name: String, backwards: bool = false) -> void:

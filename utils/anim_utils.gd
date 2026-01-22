@@ -1,21 +1,27 @@
 extends Node
 
 enum PlayerAnim {
+	BICYCLE,
 	IDLE,
+	HEADER,
 	KICK,
 	PREP_KICK,
 	RECOVER,
 	RUN,
 	TACKLE,
+	VOLLEY,
 }
 
 const PLAYER_ANIMS_MAP: Dictionary = {
+	PlayerAnim.BICYCLE: "bicycle_kick",
+	PlayerAnim.HEADER: "header",
 	PlayerAnim.IDLE: "idle",
 	PlayerAnim.KICK: "kick",
 	PlayerAnim.PREP_KICK: "prep_kick",
 	PlayerAnim.RECOVER: "recover",
 	PlayerAnim.RUN: "run",
 	PlayerAnim.TACKLE: "tackle",
+	PlayerAnim.VOLLEY: "volley_kick",
 }
 
 enum BallAnim {
