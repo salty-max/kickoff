@@ -19,22 +19,25 @@ config/icon="uid://c51cvvp36bmy8"
 
 KeyUtils="*res://utils/key_utils.gd"
 AnimUtils="*res://utils/anim_utils.gd"
+DataLoader="*res://utils/data_loader.gd"
 
 [display]
 
 window/size/viewport_width=280
 window/size/viewport_height=180
+window/size/resizable=false
 window/size/always_on_top=true
-window/size/window_width_override=1400
-window/size/window_height_override=900
-window/stretch/mode="canvas_items"
+window/size/window_width_override=1680
+window/size/window_height_override=1080
+window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
 [file_customization]
 
 folder_colors={
 "res://assets/": "red",
-"res://scenes/": "purple",
+"res://resources/": "green",
+"res://scenes/": "blue",
 "res://utils/": "yellow"
 }
 
@@ -133,3 +136,4 @@ textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

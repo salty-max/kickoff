@@ -29,6 +29,19 @@ enum State {
 	VOLLEY,
 }
 
+enum Role {
+	GOALKEEPER,
+	DEFENSER,
+	MIDFIELDER,
+	FORWARD
+}
+
+enum SkinColor {
+	LIGHT,
+	MEDIUM,
+	DARK
+}
+
 @export var control_scheme: ControlScheme
 @export var speed: float = 80.0
 @export var power: float = 70.0
@@ -42,6 +55,9 @@ enum State {
 @onready var teammate_detection_area: Area2D = $TeammateDetectionArea
 @onready var ball_detection_area: Area2D = $BallDetectionArea
 
+var full_name: String
+var role: Player.Role
+var skin_color: Player.SkinColor
 var facing := Vector2.RIGHT
 var height := 0.0
 var height_velocity := 0.0
@@ -60,6 +76,20 @@ func _physics_process(delta: float) -> void:
 	flip_sprites()
 	process_gravity(delta)
 	move_and_slide()
+	
+	
+func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, _data: PlayerData) -> void:
+	position = _position
+	ball = _ball
+	own_goal = _own_goal
+	target_goal = _target_goal
+	speed = _data.speed
+	power = _data.power
+	full_name = _data.name
+	role = _data.role
+	skin_color = _data.skin_color
+	facing = Vector2.LEFT if target_goal.position.x < position.x else Vector2.RIGHT
+	
 
 
 func process_gravity(delta: float) -> void:
