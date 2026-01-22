@@ -18,9 +18,9 @@ func _exit_tree() -> void:
 	ball.sprite.scale.y = 1.0
 	
 	
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if Time.get_ticks_msec() - elapsed_time > SHOT_DURATION:
 		transition_to(Ball.State.FREEFORM)
 	else:
-		ball.move_and_collide(ball.velocity * delta)
+		move_and_bounce(delta)
 		ball.height = lerp(ball.height, SHOT_HEIGHT, RISE_SPEED * delta)

@@ -3,6 +3,7 @@ extends AnimatableBody2D
 
 const AIR_FRICTION := 35.0
 const GROUND_FRICTION := 250.0
+const BOUNCINESS := 0.8
 
 enum State {
 	CARRIED,
@@ -69,6 +70,10 @@ func pass_to(destination: Vector2) -> void:
 	switch_state(Ball.State.FREEFORM)
 	
 	
+func stop() -> void:
+	velocity = Vector2.ZERO
+	
+	
 func has_carrier() -> bool:
 	return current_state.state_data.carrier != null
 	
@@ -81,5 +86,7 @@ func update_animation(anim_name: String, backwards: bool = false) -> void:
 	assert(animation_player.has_animation(anim_name), str("No animation named %s for Ball", [anim_name]))
 	if backwards:
 		animation_player.play_backwards(anim_name)
+		animation_player.advance(0)
 	else:
 		animation_player.play(anim_name)
+		animation_player.advance(0)

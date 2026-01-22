@@ -11,7 +11,7 @@ func _ready() -> void:
 	assert(state_data.carrier != null, "Ball should have a carrier when entering CARRIED state")
 	
 	
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	var carrier = state_data.carrier
 	var vx := 0.0
 	dribble_time += delta
@@ -20,8 +20,7 @@ func _physics_process(delta: float) -> void:
 		if carrier.velocity.x != 0:
 			vx = cos(DRIBBLE_FREQUENCY * dribble_time) * DRIBBLE_INTENSITY
 		
-		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.ROLL), carrier.facing.x < 0)
-			
+		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.ROLL), carrier.facing.x < 0)		
 	else:
 		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.IDLE))
 	

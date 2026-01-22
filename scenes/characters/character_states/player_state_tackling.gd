@@ -12,7 +12,7 @@ func _enter_tree() -> void:
 	player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.TACKLE))
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if is_tackle_complete:
 		return
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5bnxvntsynd2"]
+[gd_scene load_steps=10 format=3 uid="uid://b5bnxvntsynd2"]
 
 [ext_resource type="Texture2D" uid="uid://dt16qdo3fdavv" path="res://assets/art/backgrounds/pitch-background.png" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://c8ohvhvsvjcff" path="res://assets/art/backgrounds/pitch-pattern.png" id="2_4wyf3"]
@@ -6,8 +6,35 @@
 [ext_resource type="PackedScene" uid="uid://qnill5eje5pq" path="res://scenes/characters/player.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://bqw708e80bn5f" path="res://scenes/ball/ball.tscn" id="5_71j4m"]
 [ext_resource type="Script" uid="uid://fn4grw54383a" path="res://scenes/camera.gd" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://cmpenxbyuqk58" path="res://scenes/goal/goal.tscn" id="7_i7141"]
+[ext_resource type="Shader" uid="uid://vjme721r8n4q" path="res://scenes/crt.gdshader" id="8_4mrxx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7r4gi"]
+shader = ExtResource("8_4mrxx")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.50000002375
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.10000000475
+shader_parameter/resolution = Vector2(560, 360)
+shader_parameter/pixelate = true
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 4.7499999933364734e-08
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Backgrounds" type="Node2D" parent="."]
 
@@ -53,3 +80,24 @@ limit_bottom = 360
 position_smoothing_enabled = true
 script = ExtResource("6_qfnet")
 ball = NodePath("../Actors/Ball")
+
+[node name="PitchObjects" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="GoalHome" parent="PitchObjects" instance=ExtResource("7_i7141")]
+position = Vector2(32, 220)
+
+[node name="GoalAway" parent="PitchObjects" instance=ExtResource("7_i7141")]
+position = Vector2(818, 220)
+scale = Vector2(-1, 1)
+
+[node name="CRT" type="CanvasLayer" parent="."]
+layer = 99
+
+[node name="ColorRect" type="ColorRect" parent="CRT"]
+material = SubResource("ShaderMaterial_7r4gi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
