@@ -46,10 +46,8 @@ func _process(_delta: float) -> void:
 	set_facing()
 	set_sprites_visibility()
 	flip_sprites()
-	
-	
-func _physics_process(_delta: float) -> void:
 	move_and_slide()
+	
 	
 	
 func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.new()) -> void:
@@ -94,7 +92,7 @@ func update_animation(anim_name: String) -> void:
 		
 		
 func has_ball() -> bool:
-	return ball.current_state.state_data.carrier == self
+	return ball.get_carrier() == self
 	
 	
 func _on_animation_complete() -> void:

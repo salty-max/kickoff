@@ -69,6 +69,14 @@ func pass_to(destination: Vector2) -> void:
 	switch_state(Ball.State.FREEFORM)
 	
 	
+func has_carrier() -> bool:
+	return current_state.state_data.carrier != null
+	
+	
+func get_carrier() -> Player:
+	return current_state.state_data.carrier
+	
+	
 func update_animation(anim_name: String, backwards: bool = false) -> void:
 	assert(animation_player.has_animation(anim_name), str("No animation named %s for Ball", [anim_name]))
 	if backwards:
