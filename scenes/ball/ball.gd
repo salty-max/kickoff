@@ -1,6 +1,9 @@
 class_name Ball
 extends AnimatableBody2D
 
+const AIR_FRICTION := 35.0
+const GROUND_FRICTION := 250.0
+
 enum State {
 	CARRIED,
 	FREEFORM,
@@ -56,6 +59,14 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 func shoot(shot_velocity: Vector2) -> void:
 	velocity = shot_velocity
 	switch_state(Ball.State.SHOT)
+	
+	
+func pass_to(destination: Vector2) -> void:
+	var direction := position.direction_to(destination)
+	var distance := position.distance_to(destination)
+	var intensity := sqrt(2 * distance * GROUND_FRICTION)
+	velocity = direction * intensity
+	switch_state(Ball.State.FREEFORM)
 	
 	
 func update_animation(anim_name: String, backwards: bool = false) -> void:
