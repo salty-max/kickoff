@@ -15,7 +15,7 @@ func _on_ball_entered(incoming_ball: Ball) -> void:
 	if incoming_ball.can_air_connect(AIR_CONNECT_MIN_HEIGHT, AIR_CONNECT_MAX_HEIGHT):
 		var destination := target_goal.get_random_target_position()
 		var direction := ball.position.direction_to(destination)
-		ball.shoot(direction * player.power * BONUS_POWER_MULTIPLIER)
+		ball.shoot(direction * player.power * BONUS_POWER_MULTIPLIER, ball.height)
 		
 		
 func on_animation_complete() -> void:

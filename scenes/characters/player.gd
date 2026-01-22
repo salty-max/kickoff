@@ -8,6 +8,7 @@ const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 }
 
 const GRAVITY := 8.0
+const BALL_CONTROL_MAX_HEIGHT := 10.0
 
 enum ControlScheme {
 	CPU,
@@ -17,6 +18,7 @@ enum ControlScheme {
 
 enum State {
 	BICYCLE,
+	CHEST_CONTROL,
 	HEADER,
 	MOVING,
 	PASSING,
@@ -113,6 +115,11 @@ func update_animation(anim_name: String) -> void:
 		
 func has_ball() -> bool:
 	return ball.get_carrier() == self
+	
+	
+func control_ball() -> void:
+	if ball.height > BALL_CONTROL_MAX_HEIGHT:
+		switch_state(Player.State.CHEST_CONTROL)
 	
 	
 func _on_animation_complete() -> void:
