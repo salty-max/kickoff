@@ -31,12 +31,12 @@ func _spawn_players(country: String, goal: Goal) -> void:
 	for i in players.size():
 		var player_position: Vector2 = spawns.get_child(i).global_position
 		var player_data: PlayerData = players[i]
-		var player := _spawn_player(player_position, ball, goal, target_goal, player_data)
+		var player := _spawn_player(player_position, goal, target_goal, country, player_data)
 		add_child(player)
 	
 	
-func _spawn_player(_player_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, _player_data: PlayerData) -> Player:
+func _spawn_player(_player_position: Vector2, _own_goal: Goal, _target_goal: Goal, country: String, _player_data: PlayerData) -> Player:
 	var player := PLAYER_SCENE.instantiate()
-	player.init(_player_position, _ball, _own_goal, _target_goal, _player_data)
+	player.init(_player_position, ball, _own_goal, _target_goal, country, _player_data)
 	
 	return player

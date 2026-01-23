@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA"]
+
 const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.CPU: preload("res://assets/art/props/cpu.png"),
 	ControlScheme.P1: preload("res://assets/art/props/1p.png"),
@@ -56,6 +58,7 @@ enum SkinColor {
 @onready var ball_detection_area: Area2D = $BallDetectionArea
 
 var full_name: String
+var country: String
 var role: Player.Role
 var skin_color: Player.SkinColor
 var facing := Vector2.RIGHT
@@ -68,6 +71,7 @@ var state_factory := PlayerStateFactory.new()
 func _ready() -> void:
 	switch_state(State.MOVING)
 	set_control_texture()
+	set_shader_properties()
 
 
 func _physics_process(delta: float) -> void:
@@ -78,7 +82,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
-func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, _data: PlayerData) -> void:
+func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, _country: String, _data: PlayerData) -> void:
 	position = _position
 	ball = _ball
 	own_goal = _own_goal
@@ -88,8 +92,15 @@ func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, 
 	full_name = _data.name
 	role = _data.role
 	skin_color = _data.skin_color
+	country = _country
 	facing = Vector2.LEFT if target_goal.position.x < position.x else Vector2.RIGHT
-	
+
+
+func set_shader_properties() -> void:
+	sprite.material.set_shader_parameter("skin_color", skin_color)
+	var country_color := COUNTRIES.find(country)
+	country_color = clampi(country_color, 0, COUNTRIES.size() - 1)
+	sprite.material.set_shader_parameter("team_color", country_color)
 
 
 func process_gravity(delta: float) -> void:

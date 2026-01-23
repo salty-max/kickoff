@@ -7,16 +7,16 @@
 [ext_resource type="PackedScene" uid="uid://bqw708e80bn5f" path="res://scenes/ball/ball.tscn" id="5_71j4m"]
 [ext_resource type="Script" uid="uid://fn4grw54383a" path="res://scenes/camera.gd" id="6_qfnet"]
 [ext_resource type="PackedScene" uid="uid://cmpenxbyuqk58" path="res://scenes/goal/goal.tscn" id="7_i7141"]
-[ext_resource type="Shader" uid="uid://vjme721r8n4q" path="res://scenes/crt.gdshader" id="8_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://b2rutwdqkx0fs" path="res://assets/art/backgrounds/top-wall.png" id="8_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://da4pfritu6ap1" path="res://assets/art/backgrounds/bottom-wall.png" id="9_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://8yj8ws76502t" path="res://assets/art/backgrounds/side-wall.png" id="10_e3hyu"]
+[ext_resource type="Shader" uid="uid://drb00eq5px56p" path="res://shaders/crt.gdshader" id="11_e3hyu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7kh3"]
 size = Vector2(802, 7)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7r4gi"]
-shader = ExtResource("8_4mrxx")
+shader = ExtResource("11_e3hyu")
 shader_parameter/overlay = false
 shader_parameter/scanlines_opacity = 0.50000002375
 shader_parameter/scanlines_width = 0.5
