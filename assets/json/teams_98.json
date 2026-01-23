@@ -1,0 +1,313 @@
+[{
+	"country": "FRANCE",
+	"players": [{
+		"name": "F. BARTHEZ",
+		"skin": 0,
+		"role": 0,
+		"speed": 75,
+		"power": 100
+	}, {
+		"name": "L. THURAM",
+		"skin": 2,
+		"role": 1,
+		"speed": 78,
+		"power": 170
+	}, {
+		"name": "M. DESAILLY",
+		"skin": 2,
+		"role": 1,
+		"speed": 76,
+		"power": 180
+	}, {
+		"name": "Z. ZIDANE",
+		"skin": 0,
+		"role": 2,
+		"speed": 78,
+		"power": 185
+	}, {
+		"name": "Y. DJORKAEFF",
+		"skin": 0,
+		"role": 3,
+		"speed": 80,
+		"power": 175
+	}, {
+		"name": "T. HENRY",
+		"skin": 2,
+		"role": 3,
+		"speed": 88,
+		"power": 178
+	}]
+}, {
+	"country": "BRAZIL",
+	"players": [{
+		"name": "TAFFAREL",
+		"skin": 0,
+		"role": 0,
+		"speed": 75,
+		"power": 100
+	}, {
+		"name": "CAFU",
+		"skin": 1,
+		"role": 1,
+		"speed": 85,
+		"power": 170
+	}, {
+		"name": "R. CARLOS",
+		"skin": 1,
+		"role": 1,
+		"speed": 90,
+		"power": 190
+	}, {
+		"name": "DUNGA",
+		"skin": 0,
+		"role": 2,
+		"speed": 72,
+		"power": 175
+	}, {
+		"name": "RIVALDO",
+		"skin": 1,
+		"role": 3,
+		"speed": 82,
+		"power": 182
+	}, {
+		"name": "RONALDO",
+		"skin": 1,
+		"role": 3,
+		"speed": 92,
+		"power": 188
+	}]
+}, {
+	"country": "CROATIA",
+	"players": [{
+		"name": "D. LADIC",
+		"skin": 0,
+		"role": 0,
+		"speed": 72,
+		"power": 100
+	}, {
+		"name": "S. BILIC",
+		"skin": 0,
+		"role": 1,
+		"speed": 70,
+		"power": 170
+	}, {
+		"name": "R. JARNI",
+		"skin": 0,
+		"role": 1,
+		"speed": 82,
+		"power": 168
+	}, {
+		"name": "Z. BOBAN",
+		"skin": 0,
+		"role": 2,
+		"speed": 76,
+		"power": 178
+	}, {
+		"name": "R. PROSINECKI",
+		"skin": 0,
+		"role": 3,
+		"speed": 74,
+		"power": 180
+	}, {
+		"name": "D. SUKER",
+		"skin": 0,
+		"role": 3,
+		"speed": 80,
+		"power": 185
+	}]
+}, {
+	"country": "NETHERLANDS",
+	"players": [{
+		"name": "VAN DER SAR",
+		"skin": 0,
+		"role": 0,
+		"speed": 75,
+		"power": 105
+	}, {
+		"name": "J. STAM",
+		"skin": 0,
+		"role": 1,
+		"speed": 74,
+		"power": 185
+	}, {
+		"name": "F. DE BOER",
+		"skin": 0,
+		"role": 1,
+		"speed": 72,
+		"power": 175
+	}, {
+		"name": "E. DAVIDS",
+		"skin": 2,
+		"role": 2,
+		"speed": 82,
+		"power": 178
+	}, {
+		"name": "D. BERGKAMP",
+		"skin": 0,
+		"role": 3,
+		"speed": 78,
+		"power": 185
+	}, {
+		"name": "P. KLUIVERT",
+		"skin": 2,
+		"role": 3,
+		"speed": 82,
+		"power": 180
+	}]
+}, {
+	"country": "ITALY",
+	"players": [{
+		"name": "G. PAGLIUCA",
+		"skin": 0,
+		"role": 0,
+		"speed": 75,
+		"power": 100
+	}, {
+		"name": "P. MALDINI",
+		"skin": 0,
+		"role": 1,
+		"speed": 80,
+		"power": 175
+	}, {
+		"name": "F. CANNAVARO",
+		"skin": 0,
+		"role": 1,
+		"speed": 82,
+		"power": 172
+	}, {
+		"name": "D. ALBERTINI",
+		"skin": 0,
+		"role": 2,
+		"speed": 74,
+		"power": 170
+	}, {
+		"name": "R. BAGGIO",
+		"skin": 0,
+		"role": 3,
+		"speed": 78,
+		"power": 180
+	}, {
+		"name": "C. VIERI",
+		"skin": 0,
+		"role": 3,
+		"speed": 76,
+		"power": 182
+	}]
+}, {
+	"country": "ARGENTINA",
+	"players": [{
+		"name": "C. ROA",
+		"skin": 0,
+		"role": 0,
+		"speed": 75,
+		"power": 100
+	}, {
+		"name": "J. ZANETTI",
+		"skin": 0,
+		"role": 1,
+		"speed": 82,
+		"power": 175
+	}, {
+		"name": "R. SENSINI",
+		"skin": 0,
+		"role": 1,
+		"speed": 74,
+		"power": 170
+	}, {
+		"name": "D. SIMEONE",
+		"skin": 0,
+		"role": 2,
+		"speed": 76,
+		"power": 178
+	}, {
+		"name": "A. ORTEGA",
+		"skin": 0,
+		"role": 3,
+		"speed": 85,
+		"power": 175
+	}, {
+		"name": "G. BATISTUTA",
+		"skin": 0,
+		"role": 3,
+		"speed": 80,
+		"power": 190
+	}]
+}, {
+	"country": "ENGLAND",
+	"players": [{
+		"name": "D. SEAMAN",
+		"skin": 0,
+		"role": 0,
+		"speed": 72,
+		"power": 100
+	}, {
+		"name": "S. CAMPBELL",
+		"skin": 2,
+		"role": 1,
+		"speed": 78,
+		"power": 180
+	}, {
+		"name": "T. ADAMS",
+		"skin": 0,
+		"role": 1,
+		"speed": 70,
+		"power": 175
+	}, {
+		"name": "D. BECKHAM",
+		"skin": 0,
+		"role": 2,
+		"speed": 76,
+		"power": 180
+	}, {
+		"name": "P. SCHOLES",
+		"skin": 0,
+		"role": 3,
+		"speed": 75,
+		"power": 185
+	}, {
+		"name": "A. SHEARER",
+		"skin": 0,
+		"role": 3,
+		"speed": 78,
+		"power": 182
+	}]
+}, {
+	"country": "GERMANY",
+	"players": [{
+		"name": "A. KOPKE",
+		"skin": 0,
+		"role": 0,
+		"speed": 75,
+		"power": 100
+	}, {
+		"name": "C. WORNS",
+		"skin": 0,
+		"role": 1,
+		"speed": 74,
+		"power": 175
+	}, {
+		"name": "J. KOHLER",
+		"skin": 0,
+		"role": 1,
+		"speed": 70,
+		"power": 178
+	}, {
+		"name": "T. HASSLER",
+		"skin": 0,
+		"role": 2,
+		"speed": 76,
+		"power": 170
+	}, {
+		"name": "L. MATTHAUS",
+		"skin": 0,
+		"role": 3,
+		"speed": 72,
+		"power": 180
+	}, {
+		"name": "O. BIERHOFF",
+		"skin": 0,
+		"role": 3,
+		"speed": 76,
+		"power": 185
+	}]
+}]

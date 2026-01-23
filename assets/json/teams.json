@@ -349,4 +349,82 @@
 		"speed": 75,
 		"power": 150,
 	}]
+}, {
+	"country": "JAPAN",
+	"players": [{
+		"name": "S. GONDA",
+		"skin": 1,
+		"role": 0,
+		"speed": 75,
+		"power": 100,
+	}, {
+		"name": "M. YOSHIDA",
+		"skin": 0,
+		"role": 1,
+		"speed": 72,
+		"power": 165,
+	}, {
+		"name": "T. TOMIYASU",
+		"skin": 0,
+		"role": 1,
+		"speed": 76,
+		"power": 168,
+	}, {
+		"name": "T. KUBO",
+		"skin": 0,
+		"role": 2,
+		"speed": 81,
+		"power": 165,
+	}, {
+		"name": "K. MITOMA",
+		"skin": 0,
+		"role": 3,
+		"speed": 84,
+		"power": 172,
+	}, {
+		"name": "R. DOAN",
+		"skin": 0,
+		"role": 3,
+		"speed": 80,
+		"power": 174,
+	}]
+}, {
+	"country": "PORTUGAL",
+	"players": [{
+		"name": "D. COSTA",
+		"skin": 0,
+		"role": 0,
+		"speed": 78,
+		"power": 100,
+	}, {
+		"name": "R. DIAS",
+		"skin": 0,
+		"role": 1,
+		"speed": 76,
+		"power": 178,
+	}, {
+		"name": "PEPE",
+		"skin": 1,
+		"role": 1,
+		"speed": 74,
+		"power": 175,
+	}, {
+		"name": "B. FERNANDES",
+		"skin": 0,
+		"role": 2,
+		"speed": 79,
+		"power": 176,
+	}, {
+		"name": "C. RONALDO",
+		"skin": 0,
+		"role": 3,
+		"speed": 80,
+		"power": 182,
+	}, {
+		"name": "B. SILVA",
+		"skin": 0,
+		"role": 3,
+		"speed": 82,
+		"power": 170,
+	}]
 }]

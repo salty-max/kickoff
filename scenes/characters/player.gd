@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA"]
+const COUNTRIES := ["DEFAULT", "FRANCE", "BRAZIL", "CROATIA", "NETHERLANDS", "ITALY", "ARGENTINA", "ENGLAND", "GERMANY"]
 
 const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.CPU: preload("res://assets/art/props/cpu.png"),
@@ -97,6 +97,7 @@ func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, 
 
 
 func set_shader_properties() -> void:
+	sprite.material.set_shader_parameter("team_palette", load("res://assets/art/palettes/teams-color-palette-98.png"))
 	sprite.material.set_shader_parameter("skin_color", skin_color)
 	var country_color := COUNTRIES.find(country)
 	country_color = clampi(country_color, 0, COUNTRIES.size() - 1)

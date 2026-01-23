@@ -65,7 +65,7 @@ ball = NodePath("Ball")
 home_goal = NodePath("PitchObjects/GoalHome")
 away_goal = NodePath("PitchObjects/GoalAway")
 home_team = "FRANCE"
-away_team = "GERMANY"
+away_team = "CROATIA"
 
 [node name="Ball" parent="Actors" instance=ExtResource("5_71j4m")]
 position = Vector2(425, 180)
