@@ -11,6 +11,7 @@ enum PlayerAnim {
 	RUN,
 	TACKLE,
 	VOLLEY,
+	WALK,
 }
 
 const PLAYER_ANIMS_MAP: Dictionary = {
@@ -24,6 +25,7 @@ const PLAYER_ANIMS_MAP: Dictionary = {
 	PlayerAnim.RUN: "run",
 	PlayerAnim.TACKLE: "tackle",
 	PlayerAnim.VOLLEY: "volley_kick",
+	PlayerAnim.WALK: "walk"
 }
 
 enum BallAnim {
