@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-const COUNTRIES := ["DEFAULT", "FRANCE", "BRAZIL", "CROATIA", "NETHERLANDS", "ITALY", "ARGENTINA", "ENGLAND", "GERMANY"]
+const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA", "CANADA", "JAPAN"]
 
 const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.CPU: preload("res://assets/art/props/cpu.png"),
@@ -99,7 +99,7 @@ func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, 
 	skin_color = _data.skin_color
 	country = _country
 	facing = Vector2.LEFT if target_goal.position.x < position.x else Vector2.RIGHT
-	name = "%s_%s" % [country, full_name]
+	name = "%s_%s_%s" % [country, role, full_name]
 	
 	
 func setup_ai_behavior() -> void:
@@ -109,7 +109,7 @@ func setup_ai_behavior() -> void:
 
 
 func set_shader_properties() -> void:
-	sprite.material.set_shader_parameter("team_palette", load("res://assets/art/palettes/teams-color-palette-98.png"))
+	sprite.material.set_shader_parameter("team_palette", load("res://assets/art/palettes/teams-color-palette.png"))
 	sprite.material.set_shader_parameter("skin_color", skin_color)
 	var country_color := COUNTRIES.find(country)
 	country_color = clampi(country_color, 0, COUNTRIES.size() - 1)
@@ -174,6 +174,11 @@ func has_ball() -> bool:
 func control_ball() -> void:
 	if ball.height > BALL_CONTROL_MAX_HEIGHT:
 		switch_state(Player.State.CHEST_CONTROL)
+		
+		
+func is_facing_target_goal() -> bool:
+	var direction_to_target_goal = position.direction_to(target_goal.position)
+	return facing.dot(direction_to_target_goal) > 0
 	
 	
 func _on_animation_complete() -> void:
