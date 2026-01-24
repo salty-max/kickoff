@@ -5,6 +5,8 @@ const AI_TICK_FREQUENCY := 200
 const SPREAD_ASSIST_FACTOR := 0.8
 const SHOT_DISTANCE := 150
 const SHOT_PROBABILITY := 0.3
+const TACKLE_DISTANCE := 15
+const TACKLE_PROBABILITY := 0.3
 
 var player: Player
 var ball: Ball
@@ -41,6 +43,8 @@ func _perform_ai_movement() -> void:
 	
 	
 func _perform_ai_decisions() -> void:
+	if is_ball_carried_by_opponent() and player.position.distance_to(ball.position) <= TACKLE_DISTANCE and randf() < TACKLE_PROBABILITY:
+		player.switch_state(Player.State.TACKLING) 
 	if ball.get_carrier() == player:
 		var target = player.target_goal.get_center_target_position()
 		if player.position.distance_to(target) < SHOT_DISTANCE and randf() < SHOT_PROBABILITY:
@@ -88,3 +92,7 @@ func face_towards_target_goal() -> void:
 		
 func is_ball_carried_by_teammate() -> bool:
 	return ball.has_carrier() and ball.get_carrier() != player and ball.get_carrier().country == player.country
+	
+	
+func is_ball_carried_by_opponent() -> bool:
+	return ball.has_carrier() and ball.get_carrier().country != player.country

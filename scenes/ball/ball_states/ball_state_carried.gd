@@ -12,17 +12,16 @@ func _ready() -> void:
 	
 	
 func _physics_process(delta: float) -> void:
-	var carrier = state_data.carrier
 	var vx := 0.0
 	dribble_time += delta
 	
-	if carrier.velocity != Vector2.ZERO:
-		if carrier.velocity.x != 0:
+	if state_data.carrier.velocity != Vector2.ZERO:
+		if state_data.carrier.velocity.x != 0:
 			vx = cos(DRIBBLE_FREQUENCY * dribble_time) * DRIBBLE_INTENSITY
 		
-		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.ROLL), carrier.facing.x < 0)		
+		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.ROLL), state_data.carrier.facing.x < 0)		
 	else:
 		ball.update_animation(AnimUtils.get_ball_anim(AnimUtils.BallAnim.IDLE))
 	
 	process_gravity(delta)
-	ball.position = carrier.position + Vector2(vx + carrier.facing.x * OFFSET_FROM_PLAYER.x, OFFSET_FROM_PLAYER.y)
+	ball.position = state_data.carrier.position + Vector2(vx + state_data.carrier.facing.x * OFFSET_FROM_PLAYER.x, OFFSET_FROM_PLAYER.y)

@@ -8,6 +8,7 @@ var ball_detection_area: Area2D
 var state_data: PlayerStateData
 var target_goal: Goal
 var ai_behavior: AIBehavior
+var tackle_hitbox: Area2D
 
 
 static func build() -> PlayerStateContext:
@@ -46,4 +47,9 @@ func set_state_data(_state_data: PlayerStateData) -> PlayerStateContext:
 	
 func set_ai_behavior(_ai_behavior: AIBehavior) -> PlayerStateContext:
 	ai_behavior = _ai_behavior
+	return self
+	
+	
+func set_tackle_hitbox(_tackle_hitbox: Area2D) -> PlayerStateContext:
+	tackle_hitbox = _tackle_hitbox
 	return self

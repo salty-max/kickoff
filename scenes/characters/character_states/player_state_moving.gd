@@ -31,9 +31,8 @@ func handle_movement() -> void:
 				transition_to(Player.State.BICYCLE)
 		else:
 			transition_to(Player.State.HEADER)
-	
-	#if player.velocity != Vector2.ZERO and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-		#transition_to(Player.State.TACKLING)
+	elif player.velocity != Vector2.ZERO and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
+		transition_to(Player.State.TACKLING)
 	
 	
 func set_movement_animation() -> void:

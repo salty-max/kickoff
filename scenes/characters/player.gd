@@ -22,6 +22,7 @@ enum State {
 	BICYCLE,
 	CHEST_CONTROL,
 	HEADER,
+	HURT,
 	MOVING,
 	PASSING,
 	PREPPING_SHOT,
@@ -56,6 +57,7 @@ enum SkinColor {
 @onready var control_sprite: Sprite2D = $Sprite/ControlSprite
 @onready var teammate_detection_area: Area2D = $TeammateDetectionArea
 @onready var ball_detection_area: Area2D = $BallDetectionArea
+@onready var tackle_hitbox: Area2D = $TackleHitbox
 
 var full_name: String
 var country: String
@@ -77,6 +79,7 @@ func _ready() -> void:
 	set_shader_properties()
 	setup_ai_behavior()
 	spawn_position = position
+	tackle_hitbox.body_entered.connect(_on_tackle_player)
 
 
 func _physics_process(delta: float) -> void:
@@ -119,7 +122,7 @@ func set_shader_properties() -> void:
 func process_gravity(delta: float) -> void:
 	if height > 0:
 		height_velocity -= GRAVITY * delta
-		height += height_velocity
+		height += height_velocity * delta
 		if height < 0:
 			height = 0
 			
@@ -132,7 +135,7 @@ func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.ne
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_ball_detection_area(ball_detection_area).set_state_data(state_data).set_target_goal(target_goal).set_ai_behavior(ai_behavior)
+	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_ball_detection_area(ball_detection_area).set_state_data(state_data).set_target_goal(target_goal).set_ai_behavior(ai_behavior).set_tackle_hitbox(tackle_hitbox)
 	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Player.State.keys()[state])
@@ -150,8 +153,10 @@ func set_facing() -> void:
 func flip_sprites() -> void:
 	if facing == Vector2.RIGHT:
 		sprite.flip_h = false
+		tackle_hitbox.scale.x = 1
 	else:
 		sprite.flip_h = true
+		tackle_hitbox.scale.x = -1
 		
 		
 func set_sprites_visibility() -> void:
@@ -176,9 +181,19 @@ func control_ball() -> void:
 		switch_state(Player.State.CHEST_CONTROL)
 		
 		
+func get_hurt(hurt_origin: Vector2) -> void:
+	var data := PlayerStateData.build().set_hurt_direction(hurt_origin)
+	switch_state(Player.State.HURT, data)
+		
+		
 func is_facing_target_goal() -> bool:
 	var direction_to_target_goal = position.direction_to(target_goal.position)
 	return facing.dot(direction_to_target_goal) > 0
+	
+	
+func _on_tackle_player(body: Player) -> void:
+	if body != self and body.country != country and body.has_ball():
+		body.get_hurt(position.direction_to(body.position))
 	
 	
 func _on_animation_complete() -> void:

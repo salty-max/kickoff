@@ -10,6 +10,7 @@ var ball_detection_area: Area2D
 var target_goal: Goal
 var state_data: PlayerStateData
 var ai_behavior: AIBehavior
+var tackle_hitbox: Area2D
 
 
 func setup(ctx: PlayerStateContext) -> void:
@@ -20,6 +21,7 @@ func setup(ctx: PlayerStateContext) -> void:
 	target_goal = ctx.target_goal
 	ball_detection_area = ctx.ball_detection_area
 	ai_behavior = ctx.ai_behavior
+	tackle_hitbox = ctx.tackle_hitbox
 	
 	
 func transition_to(new_state: Player.State, data: PlayerStateData = PlayerStateData.new()) -> void:
