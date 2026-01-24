@@ -4,7 +4,7 @@ extends AnimatableBody2D
 const AIR_FRICTION := 35.0
 const GROUND_FRICTION := 250.0
 const BOUNCINESS := 0.8
-const GRAVITY := 10.0
+const GRAVITY := 600.0
 const DISTANCE_HIGH_PASS := 130
 const SHOT_HEIGHT := 5.0
 

@@ -1,12 +1,13 @@
 class_name PlayerStateMoving
 extends PlayerState
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if player.control_scheme == Player.ControlScheme.CPU:
-		pass
+		ai_behavior.process_ai(delta)
 	else:
 		handle_movement()
-		set_movement_animation()
+	
+	set_movement_animation()
 	
 	
 func handle_movement() -> void:

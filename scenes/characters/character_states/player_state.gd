@@ -9,6 +9,7 @@ var teammate_detection_area: Area2D
 var ball_detection_area: Area2D
 var target_goal: Goal
 var state_data: PlayerStateData
+var ai_behavior: AIBehavior
 
 
 func setup(ctx: PlayerStateContext) -> void:
@@ -18,6 +19,7 @@ func setup(ctx: PlayerStateContext) -> void:
 	teammate_detection_area = ctx.teammate_detection_area
 	target_goal = ctx.target_goal
 	ball_detection_area = ctx.ball_detection_area
+	ai_behavior = ctx.ai_behavior
 	
 	
 func transition_to(new_state: Player.State, data: PlayerStateData = PlayerStateData.new()) -> void:

@@ -7,6 +7,7 @@ var teammate_detection_area: Area2D
 var ball_detection_area: Area2D
 var state_data: PlayerStateData
 var target_goal: Goal
+var ai_behavior: AIBehavior
 
 
 static func build() -> PlayerStateContext:
@@ -40,4 +41,9 @@ func set_target_goal(_goal: Goal) -> PlayerStateContext:
 	
 func set_state_data(_state_data: PlayerStateData) -> PlayerStateContext:
 	state_data = _state_data
+	return self
+	
+	
+func set_ai_behavior(_ai_behavior: AIBehavior) -> PlayerStateContext:
+	ai_behavior = _ai_behavior
 	return self

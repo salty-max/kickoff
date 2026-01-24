@@ -5,11 +5,11 @@ const MAX_BONUS_DELAY := 1000.0
 const EASE_REWARD_FACTOR := 2.0
 
 var shot_direction := Vector2.ZERO
-var time_start_shot = Time.get_ticks_msec()
+var charge_time := 0.0
 
 
 func _enter_tree() -> void:
-	time_start_shot = Time.get_ticks_msec()
+	charge_time = 0.0
 	player.velocity = Vector2.ZERO
 	player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.PREP_KICK))
 	shot_direction = player.facing
@@ -17,9 +17,10 @@ func _enter_tree() -> void:
 	
 func _physics_process(delta: float) -> void:
 	shot_direction += KeyUtils.get_input_vector(player.control_scheme) * delta
+	charge_time += delta * 1000.0
 	
 	if KeyUtils.is_action_just_released(player.control_scheme, KeyUtils.Action.SHOOT):
-		var press_duration = clampf(Time.get_ticks_msec() - time_start_shot, 0.0, MAX_BONUS_DELAY)
+		var press_duration = clampf(charge_time, 0.0, MAX_BONUS_DELAY)
 		var ease_time: float = press_duration / MAX_BONUS_DELAY
 		var bonus := ease(ease_time, EASE_REWARD_FACTOR)
 		var shot_power: float = player.power * (1 + bonus)

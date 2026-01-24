@@ -3,7 +3,7 @@ extends PlayerState
 
 const BONUS_POWER_MULTIPLIER := 1.3
 const START_HEIGHT := 0.1
-const HEIGHT_VELOCITY := 1.5
+const HEIGHT_VELOCITY := 90.0
 const AIR_CONNECT_MIN_HEIGHT := 10.0
 const AIR_CONNECT_MAX_HEIGHT := 30.0
 
@@ -15,7 +15,7 @@ func _enter_tree() -> void:
 	ball_detection_area.body_entered.connect(_on_ball_entered)
 	
 	
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if player.height == 0:
 		transition_to(Player.State.RECOVERING)
 		

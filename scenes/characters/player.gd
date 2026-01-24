@@ -9,7 +9,7 @@ const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.P2: preload("res://assets/art/props/2p.png"),
 }
 
-const GRAVITY := 8.0
+const GRAVITY := 480.0
 const BALL_CONTROL_MAX_HEIGHT := 10.0
 
 enum ControlScheme {
@@ -66,12 +66,17 @@ var height := 0.0
 var height_velocity := 0.0
 var current_state: PlayerState = null
 var state_factory := PlayerStateFactory.new()
+var ai_behavior: AIBehavior = AIBehavior.new()
+var spawn_position := Vector2.ZERO
+var weight_on_duty_steering := 0.0
 
 
 func _ready() -> void:
 	switch_state(State.MOVING)
 	set_control_texture()
 	set_shader_properties()
+	setup_ai_behavior()
+	spawn_position = position
 
 
 func _physics_process(delta: float) -> void:
@@ -94,6 +99,13 @@ func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, 
 	skin_color = _data.skin_color
 	country = _country
 	facing = Vector2.LEFT if target_goal.position.x < position.x else Vector2.RIGHT
+	name = "%s_%s" % [country, full_name]
+	
+	
+func setup_ai_behavior() -> void:
+	ai_behavior.setup(self, ball)
+	ai_behavior.name = "AIBehavior"
+	add_child(ai_behavior)
 
 
 func set_shader_properties() -> void:
@@ -120,7 +132,7 @@ func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.ne
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_ball_detection_area(ball_detection_area).set_state_data(state_data).set_target_goal(target_goal)
+	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_ball_detection_area(ball_detection_area).set_state_data(state_data).set_target_goal(target_goal).set_ai_behavior(ai_behavior)
 	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", Player.State.keys()[state])
