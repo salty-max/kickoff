@@ -58,6 +58,7 @@ enum SkinColor {
 @onready var teammate_detection_area: Area2D = $TeammateDetectionArea
 @onready var ball_detection_area: Area2D = $BallDetectionArea
 @onready var tackle_hitbox: Area2D = $TackleHitbox
+@onready var opponent_detection_area: Area2D = $OpponentDetectionArea
 
 var full_name: String
 var country: String
@@ -106,7 +107,7 @@ func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, 
 	
 	
 func setup_ai_behavior() -> void:
-	ai_behavior.setup(self, ball)
+	ai_behavior.setup(self, ball, opponent_detection_area)
 	ai_behavior.name = "AIBehavior"
 	add_child(ai_behavior)
 
@@ -154,9 +155,11 @@ func flip_sprites() -> void:
 	if facing == Vector2.RIGHT:
 		sprite.flip_h = false
 		tackle_hitbox.scale.x = 1
+		opponent_detection_area.scale.x = 1
 	else:
 		sprite.flip_h = true
 		tackle_hitbox.scale.x = -1
+		opponent_detection_area.scale.x = -1
 		
 		
 func set_sprites_visibility() -> void:
