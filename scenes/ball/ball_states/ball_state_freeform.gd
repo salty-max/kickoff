@@ -3,11 +3,16 @@ extends BallState
 
 const MAX_CAPTURE_HEIGHT := 25
 
+var elapsed_time := 0.0
+
 func _enter_tree() -> void:
 	player_detection_area.body_entered.connect(_on_player_entered)
+	elapsed_time = 0.0
 	
 	
 func _physics_process(delta: float) -> void:
+	elapsed_time += delta * 1000.0
+	player_detection_area.monitoring = (elapsed_time > state_data.lock_duration)
 	set_ball_anim_from_velocity()
 	var friction = Ball.AIR_FRICTION if ball.height > 0 else Ball.GROUND_FRICTION
 	ball.velocity = ball.velocity.move_toward(Vector2.ZERO, friction * delta)

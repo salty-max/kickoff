@@ -5,9 +5,11 @@ const AIR_FRICTION := 35.0
 const GROUND_FRICTION := 250.0
 const BOUNCINESS := 0.8
 const GRAVITY := 10.0
-const DISTANCE_HIGH_PASS := 90
+const DISTANCE_HIGH_PASS := 130
 const SHOT_HEIGHT := 8.0
 const TUMBLE_HEIGHT_VELOCITY := 3.0
+const TUMBLE_LOCK_DURATION := 200
+const PASS_LOCK_DURATION := 500
 
 enum State {
 	CARRIED,
@@ -74,16 +76,18 @@ func pass_to(destination: Vector2) -> void:
 	var intensity := sqrt(2 * distance * GROUND_FRICTION)
 	velocity = direction * intensity
 	if distance > DISTANCE_HIGH_PASS:
-		height_velocity = Ball.GRAVITY * distance / (1.85 * intensity)
+		height_velocity = GRAVITY * distance / (1.85 * intensity)
 	set_carrier()
-	switch_state(Ball.State.FREEFORM)
+	var data := BallStateData.build().set_lock_duration(PASS_LOCK_DURATION)
+	switch_state(Ball.State.FREEFORM, data)
 	
 	
 func tumble(tumble_velocity: Vector2) -> void:
 	set_carrier()
 	velocity = tumble_velocity
 	height_velocity = TUMBLE_HEIGHT_VELOCITY
-	switch_state(Ball.State.FREEFORM)
+	var data := BallStateData.build().set_lock_duration(TUMBLE_LOCK_DURATION)
+	switch_state(Ball.State.FREEFORM, data)
 	
 	
 func stop() -> void:

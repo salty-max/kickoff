@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal swap_requested(player: Player)
+
 const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA", "CANADA", "JAPAN", "PORTUGAL"]
 
 const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {

@@ -401,7 +401,7 @@ monitorable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TeammateDetectionArea"]
 modulate = Color(1, 1, 1, 0.3137255)
-polygon = PackedVector2Array(0, -40, 280, -150, 330, -100, 330, 100, 280, 150, 0, 40)
+polygon = PackedVector2Array(0, -40, 200, -240, 330, -180, 330, 180, 200, 240, 0, 40)
 
 [node name="BallDetectionArea" type="Area2D" parent="."]
 collision_layer = 0
