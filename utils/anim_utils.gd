@@ -3,6 +3,8 @@ extends Node
 enum PlayerAnim {
 	BICYCLE,
 	CHEST_CONTROL,
+	DIVE_DOWN,
+	DIVE_UP,
 	IDLE,
 	HEADER,
 	HURT,
@@ -18,6 +20,8 @@ enum PlayerAnim {
 const PLAYER_ANIMS_MAP: Dictionary = {
 	PlayerAnim.BICYCLE: "bicycle_kick",
 	PlayerAnim.CHEST_CONTROL: "chest_control",
+	PlayerAnim.DIVE_DOWN: "dive_down",
+	PlayerAnim.DIVE_UP: "dive_up",
 	PlayerAnim.HEADER: "header",
 	PlayerAnim.HURT: "hurt",
 	PlayerAnim.IDLE: "idle",

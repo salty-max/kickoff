@@ -4,9 +4,9 @@ var teams: Dictionary[String, Array]
 
 
 func _init() -> void:
-	var json_file := FileAccess.open("res://assets/json/teams_98.json", FileAccess.READ)
+	var json_file := FileAccess.open("res://assets/json/teams.json", FileAccess.READ)
 	if not json_file:
-		printerr("Could not find or load teams_98.json")
+		printerr("Could not find or load teams.json")
 	var json_text := json_file.get_as_text()
 	var json := JSON.new()
 	

@@ -28,5 +28,9 @@ func transition_to(new_state: Player.State, data: PlayerStateData = PlayerStateD
 	state_transition_requested.emit(new_state, data)
 	
 	
+func can_carry_ball()-> bool:
+	return false
+	
+	
 func on_animation_complete() -> void:
 	pass

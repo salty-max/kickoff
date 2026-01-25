@@ -23,6 +23,7 @@ enum State {
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
 @onready var shadow: Sprite2D = $Shadow
+@onready var scoring_raycast: RayCast2D = $ScoringRaycast
 
 var velocity := Vector2.ZERO
 var height := 0.0
@@ -37,7 +38,7 @@ func _ready() -> void:
 	
 func _process(_delta: float) -> void:
 	sprite.position = Vector2.UP * height
-	
+	scoring_raycast.rotation = velocity.angle()
 	# Calculate shadow scale
 	# As height goes from 0 to max_height_reference, 
 	# scale goes from max_shadow_scale down to min_shadow_scale
@@ -101,6 +102,12 @@ func can_air_interact() -> bool:
 	
 func can_air_connect(min_height: float, max_height: float) -> bool:
 	return height >= min_height and height <= max_height
+	
+	
+func is_headed_for_scoring_area(scoring_area: Area2D) -> bool:
+	if not scoring_raycast.is_colliding():
+		return false
+	return scoring_raycast.get_collider() == scoring_area 
 	
 	
 func update_animation(anim_name: String, backwards: bool = false) -> void:

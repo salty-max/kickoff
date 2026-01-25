@@ -14,9 +14,10 @@ func _physics_process(delta: float) -> void:
 	
 	
 func _on_player_entered(body: Player) -> void:
-	var data := BallStateData.build().set_carrier(body)
-	body.control_ball()
-	transition_to(Ball.State.CARRIED, data)
+	if body.can_carry_ball():
+		var data := BallStateData.build().set_carrier(body)
+		body.control_ball()
+		transition_to(Ball.State.CARRIED, data)
 	
 	
 func can_air_interact() -> bool:

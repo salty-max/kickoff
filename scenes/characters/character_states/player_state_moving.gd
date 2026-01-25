@@ -23,16 +23,17 @@ func handle_movement() -> void:
 			transition_to(Player.State.PREPPING_SHOT)
 		elif KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.PASS):
 			transition_to(Player.State.PASSING)
-	elif ball.can_air_interact() and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-		if player.velocity == Vector2.ZERO:
-			if player.is_facing_target_goal():
-				transition_to(Player.State.VOLLEY)
+	elif KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
+		if ball.can_air_interact():
+			if player.velocity == Vector2.ZERO:
+				if player.is_facing_target_goal():
+					transition_to(Player.State.VOLLEY)
+				else:
+					transition_to(Player.State.BICYCLE)
 			else:
-				transition_to(Player.State.BICYCLE)
-		else:
-			transition_to(Player.State.HEADER)
-	elif player.velocity != Vector2.ZERO and KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-		transition_to(Player.State.TACKLING)
+				transition_to(Player.State.HEADER)
+		elif player.velocity != Vector2.ZERO:
+			transition_to(Player.State.TACKLING)
 	
 	
 func set_movement_animation() -> void:
@@ -44,5 +45,9 @@ func set_movement_animation() -> void:
 		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.WALK))
 	else:
 		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.RUN))
+		
+		
+func can_carry_ball()-> bool:
+	return player.role != Player.Role.GOALKEEPER
 		
 		
