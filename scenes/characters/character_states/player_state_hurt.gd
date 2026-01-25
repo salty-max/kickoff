@@ -3,7 +3,7 @@ extends PlayerState
 
 const AIR_FRICTION := 35.0
 const HURT_DURATION := 1000.0
-const HURT_HEIGHT_VELOCITY := 100.0
+const HURT_HEIGHT_VELOCITY := 3.0
 const BALL_TUMBLE_SPEED := 100.0
 
 var elapsed_time := 0.0

@@ -9,7 +9,7 @@ const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.P2: preload("res://assets/art/props/2p.png"),
 }
 
-const GRAVITY := 480.0
+const GRAVITY := 8.0
 const BALL_CONTROL_MAX_HEIGHT := 10.0
 
 enum ControlScheme {
@@ -131,7 +131,7 @@ func set_shader_properties() -> void:
 func process_gravity(delta: float) -> void:
 	if height > 0:
 		height_velocity -= GRAVITY * delta
-		height += height_velocity * delta
+		height += height_velocity
 		if height < 0:
 			height = 0
 			
@@ -199,6 +199,12 @@ func control_ball() -> void:
 func get_hurt(hurt_origin: Vector2) -> void:
 	var data := PlayerStateData.build().set_hurt_direction(hurt_origin)
 	switch_state(Player.State.HURT, data)
+	
+	
+func get_pass_request(player: Player) -> void:
+	if ball.get_carrier() == self and current_state != null and current_state.can_pass():
+		var data := PlayerStateData.build().set_pass_target(player)
+		switch_state(Player.State.PASSING, data)
 		
 		
 func is_facing_target_goal() -> bool:

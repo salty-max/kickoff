@@ -11,9 +11,7 @@ func _enter_tree() -> void:
 	set_ball_anim_from_velocity()
 	ball.sprite.scale.y = SHOT_SPRITE_SCALE
 	timer = 0.0
-	
-	if state_data.shot_height > ball.height:
-		ball.height_velocity = sqrt(2 * Ball.GRAVITY * (state_data.shot_height - ball.height))
+	ball.height = Ball.SHOT_HEIGHT
 	
 	
 func _exit_tree() -> void:

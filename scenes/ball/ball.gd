@@ -4,10 +4,10 @@ extends AnimatableBody2D
 const AIR_FRICTION := 35.0
 const GROUND_FRICTION := 250.0
 const BOUNCINESS := 0.8
-const GRAVITY := 600.0
-const DISTANCE_HIGH_PASS := 130
+const GRAVITY := 10.0
+const DISTANCE_HIGH_PASS := 90
 const SHOT_HEIGHT := 8.0
-const TUMBLE_HEIGHT_VELOCITY := 200.0
+const TUMBLE_HEIGHT_VELOCITY := 3.0
 
 enum State {
 	CARRIED,
@@ -63,6 +63,7 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 	
 func shoot(shot_velocity: Vector2, shot_height: float = SHOT_HEIGHT) -> void:
 	velocity = shot_velocity
+	set_carrier()
 	var data := BallStateData.build().set_shot_height(shot_height)
 	switch_state(Ball.State.SHOT, data)
 	
@@ -73,12 +74,13 @@ func pass_to(destination: Vector2) -> void:
 	var intensity := sqrt(2 * distance * GROUND_FRICTION)
 	velocity = direction * intensity
 	if distance > DISTANCE_HIGH_PASS:
-		height_velocity = Ball.GRAVITY * distance / (1.8 * intensity)
+		height_velocity = Ball.GRAVITY * distance / (1.85 * intensity)
+	set_carrier()
 	switch_state(Ball.State.FREEFORM)
 	
 	
 func tumble(tumble_velocity: Vector2) -> void:
-	current_state.state_data.carrier = null
+	set_carrier()
 	velocity = tumble_velocity
 	height_velocity = TUMBLE_HEIGHT_VELOCITY
 	switch_state(Ball.State.FREEFORM)
@@ -94,6 +96,10 @@ func has_carrier() -> bool:
 	
 func get_carrier() -> Player:
 	return current_state.state_data.carrier
+	
+
+func set_carrier(player: Player = null) -> void:
+	current_state.state_data.carrier = player
 	
 	
 func can_air_interact() -> bool:

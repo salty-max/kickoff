@@ -58,4 +58,4 @@ func has_opponents_nearby() -> bool:
 	
 func has_teammate_in_view() -> bool:
 	var players_in_view := teammate_detection_area.get_overlapping_bodies()
-	return players_in_view.find_custom(func(p: Player): return p != player and p.country == player.country) > -1
+	return players_in_view.find_custom(func(p: Player): return p != player and p.country == player.country and p.role != Player.Role.GOALKEEPER) > -1

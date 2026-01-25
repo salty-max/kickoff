@@ -28,7 +28,7 @@ func set_ball_anim_from_velocity() -> void:
 func process_gravity(delta: float, bounciness: float = 0.0) -> void:
 	if ball.height > 0 or ball.height_velocity > 0:
 		ball.height_velocity -= Ball.GRAVITY * delta
-		ball.height += ball.height_velocity * delta
+		ball.height += ball.height_velocity
 		if ball.height < 0:
 			ball.height = 0
 			if bounciness > 0 and ball.height_velocity < 0:

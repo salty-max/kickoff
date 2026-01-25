@@ -17,14 +17,16 @@ func handle_movement() -> void:
 	player.velocity = direction * player.speed
 	if player.velocity != Vector2.ZERO:
 		teammate_detection_area.rotation = player.velocity.angle()
-	
-	if player.has_ball():
-		if KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-			transition_to(Player.State.PREPPING_SHOT)
-		elif KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.PASS):
+		
+	if KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.PASS):
+		if player.has_ball():
 			transition_to(Player.State.PASSING)
+		elif can_teammate_pass_ball():
+			ball.get_carrier().get_pass_request(player)
 	elif KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
-		if ball.can_air_interact():
+		if player.has_ball():
+			transition_to(Player.State.PREPPING_SHOT)
+		elif ball.can_air_interact():
 			if player.velocity == Vector2.ZERO:
 				if player.is_facing_target_goal():
 					transition_to(Player.State.VOLLEY)
@@ -34,7 +36,8 @@ func handle_movement() -> void:
 				transition_to(Player.State.HEADER)
 		elif player.velocity != Vector2.ZERO:
 			transition_to(Player.State.TACKLING)
-	
+
+
 	
 func set_movement_animation() -> void:
 	var velocity := player.velocity.length()
@@ -50,4 +53,11 @@ func set_movement_animation() -> void:
 func can_carry_ball()-> bool:
 	return player.role != Player.Role.GOALKEEPER
 		
+		
+func can_teammate_pass_ball() -> bool:
+	return ball.get_carrier() != null and ball.get_carrier().country == player.country and ball.get_carrier().control_scheme == Player.ControlScheme.CPU
+	
+	
+func can_pass() -> bool:
+	return true
 		

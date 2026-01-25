@@ -16,3 +16,7 @@ func _physics_process(delta: float) -> void:
 	timer += delta * 1000.0
 	if timer > CONTROL_DURATION:
 		transition_to(Player.State.MOVING)
+		
+		
+func can_pass() -> bool:
+	return true

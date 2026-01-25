@@ -1,6 +1,8 @@
 class_name BallStateFreeform
 extends BallState
 
+const MAX_CAPTURE_HEIGHT := 25
+
 func _enter_tree() -> void:
 	player_detection_area.body_entered.connect(_on_player_entered)
 	
@@ -14,7 +16,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 func _on_player_entered(body: Player) -> void:
-	if body.can_carry_ball():
+	if body.can_carry_ball() and ball.height < MAX_CAPTURE_HEIGHT:
 		var data := BallStateData.build().set_carrier(body)
 		body.control_ball()
 		transition_to(Ball.State.CARRIED, data)
