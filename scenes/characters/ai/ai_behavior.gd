@@ -8,16 +8,18 @@ var player: Player
 var ball: Ball
 var time_since_last_ai_tick := 0.0
 var opponent_detection_area: Area2D
+var teammate_detection_area: Area2D
 
 
 func _ready() -> void:
 	time_since_last_ai_tick = 0.0 + randi_range(0, AI_TICK_FREQUENCY)
 
 
-func setup(_player: Player, _ball: Ball, _opponent_detection_area: Area2D) -> void:
+func setup(_player: Player, _ball: Ball, _opponent_detection_area: Area2D, _teammate_detection_area: Area2D) -> void:
 	player = _player
 	ball = _ball
 	opponent_detection_area = _opponent_detection_area
+	teammate_detection_area = _teammate_detection_area
 	
 	
 func process_ai(delta: float) -> void:
@@ -52,3 +54,8 @@ func is_ball_carried_by_opponent() -> bool:
 func has_opponents_nearby() -> bool:
 	var players := opponent_detection_area.get_overlapping_bodies()
 	return players.find_custom(func(p: Player): return p.country != player.country) > -1
+	
+	
+func has_teammate_in_view() -> bool:
+	var players_in_view := teammate_detection_area.get_overlapping_bodies()
+	return players_in_view.find_custom(func(p: Player): return p != player and p.country == player.country) > -1
