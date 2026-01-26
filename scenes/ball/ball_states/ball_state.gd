@@ -6,12 +6,14 @@ signal state_transition_requested(new_state: Ball.State, state_data: BallStateDa
 var ball: Ball = null
 var state_data: BallStateData
 var player_detection_area: Area2D = null
+var shot_particles: GPUParticles2D
 
 
 func setup(ctx: BallStateContext) -> void:
 	ball = ctx.ball
 	state_data = ctx.state_data
 	player_detection_area = ctx.player_detection_area
+	shot_particles = ctx.shot_particles
 
 
 func transition_to(new_state: Ball.State, data: BallStateData = BallStateData.new()) -> void:

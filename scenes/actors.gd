@@ -3,6 +3,7 @@ extends Node2D
 
 const WEIGHT_CACHE_DURATION := 200
 const PLAYER_SCENE := preload("res://scenes/characters/player.tscn")
+const SPARK_SCENE = preload("res://scenes/particles/spark.tscn")
 
 @export_category("Node References")
 @export var ball: Ball
@@ -20,6 +21,7 @@ var is_checking_for_kickoff_readiness := false
 
 func _init() -> void:
 	GameEvents.team_reset.connect(_on_team_reset)
+	GameEvents.impact_received.connect(_on_impact_received)
 
 
 func _ready() -> void:
@@ -132,3 +134,9 @@ func _on_player_swap_requested(requester: Player) -> void:
 		
 func _on_team_reset() -> void:
 	is_checking_for_kickoff_readiness = true
+	
+	
+func _on_impact_received(impact_position: Vector2, _is_high_impact: bool) -> void:
+	var spark := SPARK_SCENE.instantiate()
+	spark.position = impact_position
+	add_child(spark)

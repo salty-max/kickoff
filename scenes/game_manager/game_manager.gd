@@ -2,6 +2,7 @@ extends Node
 
 const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA", "CANADA", "JAPAN", "PORTUGAL"]
 const GAME_DURATION := 2 * 60 * 1000.0
+const IMPACT_PAUSE_DURATION := 100.0
 
 enum State {
 	GAME_OVER,
@@ -18,12 +19,23 @@ var score: Array[int] = [0, 0]
 var time_left: float
 var state_factory := GameStateFactory.new()
 var current_state: GameState
+var time_since_paused := Time.get_ticks_msec()
+
+
+func _init() -> void:
+	process_mode = ProcessMode.PROCESS_MODE_ALWAYS
 
 
 func _ready() -> void:
 	time_left = GAME_DURATION
 	switch_state(State.RESET)
+	GameEvents.impact_received.connect(_on_impact_received)
+	time_since_paused = Time.get_ticks_msec()
 	
+	
+func _process(_delta: float) -> void:
+	if get_tree().paused and Time.get_ticks_msec() - time_since_paused > IMPACT_PAUSE_DURATION:
+		get_tree().paused = false
 	
 func get_home_country() -> String:
 	return countries[0]
@@ -79,3 +91,9 @@ func is_coop() -> bool:
 	
 func is_single_player() -> bool:
 	return player_setup[1].is_empty()
+	
+	
+func _on_impact_received(_impact_position: Vector2, is_high_impact: bool) -> void:
+	if is_high_impact:
+		time_since_paused = Time.get_ticks_msec()
+		get_tree().paused = true

@@ -60,13 +60,15 @@ enum SkinColor {
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
-@onready var control_sprite: Sprite2D = $Sprite/ControlSprite
+@onready var control_sprite: Sprite2D = %ControlSprite
 @onready var teammate_detection_area: Area2D = $TeammateDetectionArea
 @onready var ball_detection_area: Area2D = $BallDetectionArea
 @onready var tackle_hitbox: Area2D = $TackleHitbox
 @onready var opponent_detection_area: Area2D = $OpponentDetectionArea
 @onready var permanent_damage_emitter_area: Area2D = $PermanentDamageEmitterArea
-@onready var goalie_hands_collider: CollisionShape2D = $GoalieHands/GoalieHandsCollider
+@onready var goalie_hands_collider: CollisionShape2D = %GoalieHandsCollider
+@onready var root_particles: Node2D = %RootParticles
+@onready var run_particles: GPUParticles2D = %RunParticles
 
 var full_name: String
 var country: String
@@ -183,14 +185,17 @@ func flip_sprites() -> void:
 		sprite.flip_h = false
 		tackle_hitbox.scale.x = 1
 		opponent_detection_area.scale.x = 1
+		root_particles.scale.x = 1
 	else:
 		sprite.flip_h = true
 		tackle_hitbox.scale.x = -1
 		opponent_detection_area.scale.x = -1
+		root_particles.scale.x = -1
 		
 		
 func set_sprites_visibility() -> void:
 	control_sprite.visible = has_ball() or not control_scheme == ControlScheme.CPU
+	run_particles.emitting = velocity.length() == speed
 		
 		
 func set_control_texture() -> void:

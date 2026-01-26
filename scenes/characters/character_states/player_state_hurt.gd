@@ -16,7 +16,7 @@ func _enter_tree() -> void:
 	elapsed_time = 0.0
 	if ball.get_carrier() == player:
 		ball.tumble(state_data.hurt_direction * BALL_TUMBLE_SPEED)
-	
+		GameEvents.impact_received.emit(player.position, false)
 	
 func _physics_process(delta: float) -> void:
 	elapsed_time += delta * 1000.0

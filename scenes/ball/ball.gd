@@ -27,6 +27,7 @@ enum State {
 @onready var sprite: Sprite2D = $Sprite
 @onready var shadow: Sprite2D = $Shadow
 @onready var scoring_raycast: RayCast2D = $ScoringRaycast
+@onready var shot_particles: GPUParticles2D = $ShotParticles
 
 var velocity := Vector2.ZERO
 var height := 0.0
@@ -60,7 +61,7 @@ func switch_state(state: State, state_data: BallStateData = BallStateData.new())
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
-	var ctx := BallStateContext.build().set_ball(self).set_player_detection_area(player_detection_area).set_state_data(state_data)
+	var ctx := BallStateContext.build().set_ball(self).set_player_detection_area(player_detection_area).set_state_data(state_data).set_shot_particles(shot_particles)
 	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = str("State: ", State.keys()[state])

@@ -12,10 +12,13 @@ func _enter_tree() -> void:
 	ball.sprite.scale.y = SHOT_SPRITE_SCALE
 	timer = 0.0
 	ball.height = Ball.SHOT_HEIGHT
+	GameEvents.impact_received.emit(ball.position, true)
+	shot_particles.emitting = true
 	
 	
 func _exit_tree() -> void:
 	ball.sprite.scale.y = 1.0
+	shot_particles.emitting = false
 	
 	
 func _physics_process(delta: float) -> void:

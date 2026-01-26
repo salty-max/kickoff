@@ -4,6 +4,7 @@ extends RefCounted
 var ball: Ball
 var player_detection_area: Area2D
 var state_data: BallStateData
+var shot_particles: GPUParticles2D
 
 
 static func build() -> BallStateContext:
@@ -22,4 +23,9 @@ func set_player_detection_area(_player_detection_area: Area2D) -> BallStateConte
 	
 func set_state_data(_state_data: BallStateData) -> BallStateContext:
 	state_data = _state_data
+	return self
+	
+	
+func set_shot_particles(_shot_particles: GPUParticles2D) -> BallStateContext:
+	shot_particles = _shot_particles
 	return self
