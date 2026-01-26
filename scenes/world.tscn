@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b5bnxvntsynd2"]
+[gd_scene load_steps=12 format=3 uid="uid://b5bnxvntsynd2"]
 
 [ext_resource type="Texture2D" uid="uid://dt16qdo3fdavv" path="res://assets/art/backgrounds/pitch-background.png" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://c8ohvhvsvjcff" path="res://assets/art/backgrounds/pitch-pattern.png" id="2_4wyf3"]
@@ -10,34 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://b2rutwdqkx0fs" path="res://assets/art/backgrounds/top-wall.png" id="8_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://da4pfritu6ap1" path="res://assets/art/backgrounds/bottom-wall.png" id="9_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://8yj8ws76502t" path="res://assets/art/backgrounds/side-wall.png" id="10_e3hyu"]
-[ext_resource type="Shader" uid="uid://drb00eq5px56p" path="res://shaders/crt.gdshader" id="11_e3hyu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7kh3"]
 size = Vector2(802, 7)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7r4gi"]
-shader = ExtResource("11_e3hyu")
-shader_parameter/overlay = false
-shader_parameter/scanlines_opacity = 0.50000002375
-shader_parameter/scanlines_width = 0.5
-shader_parameter/grille_opacity = 0.10000000475
-shader_parameter/resolution = Vector2(560, 360)
-shader_parameter/pixelate = true
-shader_parameter/roll = false
-shader_parameter/roll_speed = 8.0
-shader_parameter/roll_size = 0.0
-shader_parameter/roll_variation = 1.8
-shader_parameter/distort_intensity = 0.05
-shader_parameter/noise_opacity = 0.4
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.06
-shader_parameter/aberration = 4.7499999933364734e-08
-shader_parameter/brightness = 1.4
-shader_parameter/discolor = false
-shader_parameter/warp_amount = 0.0
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.5
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -160,15 +135,3 @@ position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 script = ExtResource("6_qfnet")
 ball = NodePath("../Actors/Ball")
-
-[node name="CRT" type="CanvasLayer" parent="."]
-layer = 99
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="CRT"]
-material = SubResource("ShaderMaterial_7r4gi")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2

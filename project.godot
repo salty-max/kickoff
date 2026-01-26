@@ -20,6 +20,7 @@ config/icon="uid://c51cvvp36bmy8"
 KeyUtils="*res://utils/key_utils.gd"
 AnimUtils="*res://utils/anim_utils.gd"
 DataLoader="*res://utils/data_loader.gd"
+GameEvents="*res://scenes/game_events.gd"
 
 [display]
 

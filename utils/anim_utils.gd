@@ -2,6 +2,7 @@ extends Node
 
 enum PlayerAnim {
 	BICYCLE,
+	CELEBRATE,
 	CHEST_CONTROL,
 	DIVE_DOWN,
 	DIVE_UP,
@@ -9,6 +10,7 @@ enum PlayerAnim {
 	HEADER,
 	HURT,
 	KICK,
+	MOURN,
 	PREP_KICK,
 	RECOVER,
 	RUN,
@@ -19,6 +21,7 @@ enum PlayerAnim {
 
 const PLAYER_ANIMS_MAP: Dictionary = {
 	PlayerAnim.BICYCLE: "bicycle_kick",
+	PlayerAnim.CELEBRATE: "celebrate",
 	PlayerAnim.CHEST_CONTROL: "chest_control",
 	PlayerAnim.DIVE_DOWN: "dive_down",
 	PlayerAnim.DIVE_UP: "dive_up",
@@ -26,6 +29,7 @@ const PLAYER_ANIMS_MAP: Dictionary = {
 	PlayerAnim.HURT: "hurt",
 	PlayerAnim.IDLE: "idle",
 	PlayerAnim.KICK: "kick",
+	PlayerAnim.MOURN: "mourn",
 	PlayerAnim.PREP_KICK: "prep_kick",
 	PlayerAnim.RECOVER: "recover",
 	PlayerAnim.RUN: "run",

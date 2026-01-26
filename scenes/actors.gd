@@ -23,8 +23,10 @@ var time_since_last_cache := 0.0
 func _ready() -> void:
 	time_since_last_cache = 0.0
 	home_team = _spawn_players(home_country, home_goal)
+	home_goal.init(home_country)
 	spawns.scale.x = -1
 	away_team = _spawn_players(away_country, away_goal)
+	away_goal.init(away_country)
 	
 	var player: Player = get_children().filter(func(p): return p is Player)[4]
 	player.control_scheme = Player.ControlScheme.P1

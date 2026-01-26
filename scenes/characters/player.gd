@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
+@warning_ignore("unused_signal")
 signal swap_requested(player: Player)
 
 const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA", "CANADA", "JAPAN", "PORTUGAL"]
@@ -22,10 +23,12 @@ enum ControlScheme {
 
 enum State {
 	BICYCLE,
+	CELEBRATING,
 	CHEST_CONTROL,
 	DIVING,
 	HEADER,
 	HURT,
+	MOURNING,
 	MOVING,
 	PASSING,
 	PREPPING_SHOT,
@@ -90,6 +93,7 @@ func _ready() -> void:
 	switch_state(State.MOVING)
 	spawn_position = position
 	tackle_hitbox.body_entered.connect(_on_tackle_player)
+	GameEvents.team_scored.connect(_on_team_scored)
 
 
 func _physics_process(delta: float) -> void:
@@ -222,3 +226,10 @@ func _on_tackle_player(body: Player) -> void:
 func _on_animation_complete() -> void:
 	if current_state != null:
 		current_state.on_animation_complete()
+		
+		
+func _on_team_scored(country_scored_on: String) -> void:
+	if country_scored_on == country:
+		switch_state(Player.State.MOURNING)
+	else:
+		switch_state(Player.State.CELEBRATING)
