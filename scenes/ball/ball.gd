@@ -28,6 +28,7 @@ enum State {
 @onready var shadow: Sprite2D = $Shadow
 @onready var scoring_raycast: RayCast2D = $ScoringRaycast
 @onready var shot_particles: GPUParticles2D = $ShotParticles
+@onready var player_proximity_area: Area2D = $PlayerProximityArea
 
 var velocity := Vector2.ZERO
 var height := 0.0
@@ -134,6 +135,11 @@ func update_animation(anim_name: String, backwards: bool = false) -> void:
 	else:
 		animation_player.play(anim_name)
 		animation_player.advance(0)
+		
+		
+func get_proximity_teammates_count(country: String) -> int:
+	var players := player_proximity_area.get_overlapping_bodies()
+	return players.filter(func(p: Player): return p.country == country).size()
 		
 		
 func _on_team_reset() -> void:

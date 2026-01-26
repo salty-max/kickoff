@@ -17,22 +17,20 @@ func perform_ai_movement() -> void:
 	elif is_ball_carried_by_teammate():
 		total_steering_force += get_assist_formation_steering_force()
 	else:
-		# This function is what the subclasses will change!
 		total_steering_force += get_on_duty_steering_force()
 		
-		# Common Fallback: If no job, check spawn or ball chase
-		if total_steering_force.length_squared() < 0.1:
+		if total_steering_force.length_squared() < 1:
 			if is_ball_carried_by_opponent():
 				total_steering_force += get_spawn_steering_force()
 			elif not ball.has_carrier():
 				total_steering_force += get_ball_proximity_steering_force()
+				total_steering_force += get_density_around_ball_steering_force()
 		
 	total_steering_force = total_steering_force.limit_length(1.0)
 	player.velocity = total_steering_force * player.speed
 	
 	
 func perform_ai_decisions() -> void:
-	# Default implementation (can be overridden)
 	_try_tackle()
 	
 	if ball.get_carrier() == player:
@@ -92,6 +90,15 @@ func get_ball_proximity_steering_force() -> Vector2:
 func get_spawn_steering_force() -> Vector2:
 	var weight := get_bicircular_weight(player.position, player.spawn_position, 30, 0, 100, 1)
 	var direction := player.position.direction_to(player.spawn_position)
+	return direction * weight
+	
+	
+func get_density_around_ball_steering_force() -> Vector2:
+	var teammates_near_ball_count := ball.get_proximity_teammates_count(player.country)
+	if teammates_near_ball_count == 0:
+		return Vector2.ZERO
+	var weight := 1 - 1.0 / teammates_near_ball_count
+	var direction := ball.position.direction_to(player.position)
 	return direction * weight
 
 
