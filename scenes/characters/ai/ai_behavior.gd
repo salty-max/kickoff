@@ -38,11 +38,6 @@ func perform_ai_decisions() -> void:
 	pass
 		
 		
-func face_towards_target_goal() -> void:
-	if not player.is_facing_target_goal():
-		player.facing = player.facing * -1
-		
-		
 func is_ball_carried_by_teammate() -> bool:
 	return ball.has_carrier() and ball.get_carrier() != player and ball.get_carrier().country == player.country
 	

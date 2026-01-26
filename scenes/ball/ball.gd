@@ -32,10 +32,13 @@ var height := 0.0
 var height_velocity := 0.0
 var state_factory := BallStateFactory.new()
 var current_state: BallState = null
+var spawn_position: Vector2
 
 
 func _ready() -> void:
 	switch_state(State.FREEFORM)
+	spawn_position = position
+	GameEvents.team_reset.connect(_on_team_reset)
 	
 	
 func _process(_delta: float) -> void:
@@ -128,3 +131,9 @@ func update_animation(anim_name: String, backwards: bool = false) -> void:
 	else:
 		animation_player.play(anim_name)
 		animation_player.advance(0)
+		
+		
+func _on_team_reset() -> void:
+	position = spawn_position
+	velocity = Vector2.ZERO
+	switch_state(State.FREEFORM)

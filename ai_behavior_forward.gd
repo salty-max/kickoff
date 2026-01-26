@@ -13,7 +13,7 @@ func perform_ai_decisions() -> void:
 		if randf() < (PASS_PROBABILITY * 0.5): 
 			player.switch_state(Player.State.PASSING)
 
-func _get_on_duty_steering_force() -> Vector2:
+func get_on_duty_steering_force() -> Vector2:
 	# Logic: Find space behind the defense
 	
 	if is_ball_carried_by_opponent():

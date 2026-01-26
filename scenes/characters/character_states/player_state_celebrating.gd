@@ -6,6 +6,7 @@ const CELEBRATING_HEIGHT_VELOCITY := 2.0
 
 func _enter_tree() -> void:
 	celebrate()
+	GameEvents.team_reset.connect(_on_team_reset)
 
 
 func _physics_process(delta: float) -> void:
@@ -18,4 +19,9 @@ func celebrate() -> void:
 	player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.CELEBRATE))
 	player.height = 0.1
 	player.height_velocity = CELEBRATING_HEIGHT_VELOCITY
+	
+	
+func _on_team_reset() -> void:
+	var data := PlayerStateData.build().set_reset_position(player.spawn_position)
+	transition_to(Player.State.RESETING, data)
 	

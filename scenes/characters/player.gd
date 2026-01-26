@@ -12,6 +12,7 @@ const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 
 const GRAVITY := 8.0
 const BALL_CONTROL_MAX_HEIGHT := 10.0
+const WALK_ANIM_THRESHOLD := 0.6
 
 enum ControlScheme {
 	CPU,
@@ -31,6 +32,7 @@ enum State {
 	PASSING,
 	PREPPING_SHOT,
 	RECOVERING,
+	RESETING,
 	SHOOTING,
 	TACKLING,
 	VOLLEY,
@@ -78,6 +80,7 @@ var state_factory := PlayerStateFactory.new()
 var current_ai_behavior: AIBehavior
 var ai_behavior_factory := AIBehaviorFactory.new()
 var spawn_position := Vector2.ZERO
+var kickoff_position := Vector2.ZERO
 var weight_on_duty_steering := 0.0
 
 
@@ -102,8 +105,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
-func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, _country: String, _data: PlayerData) -> void:
+func init(_position: Vector2, _ball: Ball, _own_goal: Goal, _target_goal: Goal, _country: String, _kickoff_position: Vector2, _data: PlayerData) -> void:
 	position = _position
+	kickoff_position = _kickoff_position
 	ball = _ball
 	own_goal = _own_goal
 	target_goal = _target_goal
@@ -162,6 +166,15 @@ func set_facing() -> void:
 		facing = Vector2.LEFT
 		
 		
+func set_movement_animation() -> void:
+	if velocity.length() < 1:
+		update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.IDLE))
+	elif velocity.length() < speed * WALK_ANIM_THRESHOLD:
+		update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.WALK))
+	else:
+		update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.RUN))
+		
+		
 func flip_sprites() -> void:
 	if facing == Vector2.RIGHT:
 		sprite.flip_h = false
@@ -194,6 +207,10 @@ func has_ball() -> bool:
 	return ball.get_carrier() == self
 	
 	
+func is_ready_for_kickoff() -> bool:
+	return current_state != null and current_state.is_ready_for_kickoff()
+	
+	
 func control_ball() -> void:
 	if ball.height > BALL_CONTROL_MAX_HEIGHT:
 		switch_state(State.CHEST_CONTROL)
@@ -213,6 +230,11 @@ func get_pass_request(player: Player) -> void:
 func is_facing_target_goal() -> bool:
 	var direction_to_target_goal = position.direction_to(target_goal.position)
 	return facing.dot(direction_to_target_goal) > 0
+	
+	
+func face_towards_target_goal() -> void:
+	if not is_facing_target_goal():
+		facing = facing * -1
 	
 	
 func _on_tackle_player(body: Player) -> void:

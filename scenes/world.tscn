@@ -39,11 +39,18 @@ script = ExtResource("4_q5onr")
 ball = NodePath("Ball")
 home_goal = NodePath("PitchObjects/GoalHome")
 away_goal = NodePath("PitchObjects/GoalAway")
-home_country = "JAPAN"
-away_country = "PORTUGAL"
 
 [node name="Ball" parent="Actors" instance=ExtResource("5_71j4m")]
 position = Vector2(425, 180)
+
+[node name="Kickoffs" type="Node2D" parent="Actors"]
+position = Vector2(425, 180)
+
+[node name="KickoffPosition" type="Node2D" parent="Actors/Kickoffs"]
+position = Vector2(-10, 0)
+
+[node name="KickoffPosition2" type="Node2D" parent="Actors/Kickoffs"]
+position = Vector2(-15, 30)
 
 [node name="Spawns" type="Node2D" parent="Actors"]
 position = Vector2(425, 180)

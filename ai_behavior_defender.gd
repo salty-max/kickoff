@@ -11,11 +11,11 @@ func perform_ai_decisions() -> void:
 		_try_pass()
 		_try_shoot(SHOT_DISTANCE * 0.5)
 
-func _get_on_duty_steering_force() -> Vector2:
+func get_on_duty_steering_force() -> Vector2:
 	var ball_is_threatening = is_ball_carried_by_opponent() or (ball.position.distance_to(player.own_goal.position) < 300)
 	
 	if not ball_is_threatening:
-		return _get_spawn_steering_force()
+		return get_spawn_steering_force()
 
 	var direction: Vector2
 	var weight: float
@@ -41,7 +41,7 @@ func _get_on_duty_steering_force() -> Vector2:
 		var cover_spot = Vector2(cover_point_x, 0)
 		
 		direction = player.position.direction_to(cover_spot)
-		weight = _get_bicircular_weight(player.position, cover_spot, 5, 0, 40, 1)
+		weight = get_bicircular_weight(player.position, cover_spot, 5, 0, 40, 1)
 		
 	else:
 		# --- ACTIVE MODE (Strong Side) ---
@@ -58,6 +58,6 @@ func _get_on_duty_steering_force() -> Vector2:
 			var final_spot = defense_spot.lerp(player.spawn_position, 0.5)
 			
 			direction = player.position.direction_to(final_spot)
-			weight = _get_bicircular_weight(player.position, final_spot, 10, 0, 50, 1)
+			weight = get_bicircular_weight(player.position, final_spot, 10, 0, 50, 1)
 
 	return direction * weight

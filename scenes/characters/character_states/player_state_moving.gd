@@ -1,7 +1,6 @@
 class_name PlayerStateMoving
 extends PlayerState
 
-const WALK_ANIM_THRESHOLD := 0.6
 
 func _physics_process(delta: float) -> void:
 	if player.control_scheme == Player.ControlScheme.CPU:
@@ -9,7 +8,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		handle_movement()
 	
-	set_movement_animation()
+	player.set_movement_animation()
 	
 	
 func handle_movement() -> void:
@@ -38,18 +37,6 @@ func handle_movement() -> void:
 				transition_to(Player.State.HEADER)
 		elif player.velocity != Vector2.ZERO:
 			transition_to(Player.State.TACKLING)
-
-
-	
-func set_movement_animation() -> void:
-	var velocity := player.velocity.length()
-	
-	if velocity < 1:
-		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.IDLE))
-	elif velocity < player.speed * WALK_ANIM_THRESHOLD:
-		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.WALK))
-	else:
-		player.update_animation(AnimUtils.get_player_anim(AnimUtils.PlayerAnim.RUN))
 		
 		
 func can_carry_ball()-> bool:

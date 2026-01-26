@@ -10,10 +10,12 @@ const PLAYER_SCENE := preload("res://scenes/characters/player.tscn")
 @export var away_goal: Goal
 
 @onready var spawns: Node2D = $Spawns
+@onready var kickoffs: Node2D = $Kickoffs
 
 var home_team: Array[Player] = []
 var away_team: Array[Player] = []
 var time_since_last_cache := 0.0
+var is_checking_for_kickoff_readiness := false
 
 
 func _ready() -> void:
@@ -21,6 +23,7 @@ func _ready() -> void:
 	home_team = _spawn_players(GameManager.get_home_country(), home_goal)
 	home_goal.init(GameManager.get_home_country())
 	spawns.scale.x = -1
+	kickoffs.scale.x = -1
 	away_team = _spawn_players(GameManager.get_away_country(), away_goal)
 	away_goal.init(GameManager.get_away_country())
 	
@@ -28,12 +31,17 @@ func _ready() -> void:
 	player.control_scheme = Player.ControlScheme.P1
 	player.set_control_texture()
 	
+	GameEvents.team_reset.connect(_on_team_reset)
+	
 	
 func _physics_process(delta: float) -> void:
 	time_since_last_cache += delta * 1000.0
 	if time_since_last_cache > WEIGHT_CACHE_DURATION:
 		_set_on_duty_weights()
 		time_since_last_cache = 0.0
+		
+	if is_checking_for_kickoff_readiness:
+		_check_for_kickoff_readiness()
 	
 	
 func _spawn_players(country: String, goal: Goal) -> Array[Player]:
@@ -43,18 +51,31 @@ func _spawn_players(country: String, goal: Goal) -> Array[Player]:
 	for i in players.size():
 		var player_position: Vector2 = spawns.get_child(i).global_position
 		var player_data: PlayerData = players[i]
-		var player := _spawn_player(player_position, goal, target_goal, country, player_data)
+		var kickoff_position := player_position
+		if i > 3:
+			kickoff_position = kickoffs.get_child(i - 4).global_position as Vector2
+		var player := _spawn_player(player_position, goal, target_goal, country, kickoff_position, player_data)
 		player_nodes.append(player)
 		add_child(player)
 	
 	return player_nodes
 	
-func _spawn_player(_player_position: Vector2, _own_goal: Goal, _target_goal: Goal, country: String, _player_data: PlayerData) -> Player:
+func _spawn_player(_player_position: Vector2, _own_goal: Goal, _target_goal: Goal, country: String, _kickoff_position: Vector2, _player_data: PlayerData) -> Player:
 	var player: Player = PLAYER_SCENE.instantiate()
-	player.init(_player_position, ball, _own_goal, _target_goal, country, _player_data)
+	player.init(_player_position, ball, _own_goal, _target_goal, country, _kickoff_position, _player_data)
 	player.swap_requested.connect(_on_player_swap_requested)
 	
 	return player
+	
+	
+func _check_for_kickoff_readiness() -> void:
+	for team in [home_team, away_team]:
+		for player: Player in team:
+			if not player.is_ready_for_kickoff():
+				return
+				
+	is_checking_for_kickoff_readiness = false
+	GameEvents.kickoff_ready.emit()
 	
 	
 func _set_on_duty_weights() -> void:
@@ -85,3 +106,7 @@ func _on_player_swap_requested(requester: Player) -> void:
 		requester.set_control_texture()
 		closest_cpu_to_ball.control_scheme = player_control_scheme
 		closest_cpu_to_ball.set_control_texture()
+		
+		
+func _on_team_reset() -> void:
+	is_checking_for_kickoff_readiness = true
