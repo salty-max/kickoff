@@ -142,4 +142,4 @@ func _on_team_reset() -> void:
 	
 	
 func _on_kickoff_started() -> void:
-	pass_to(spawn_position + Vector2.DOWN * KICKOFF_PASS_DISTANCE, 0)
+	pass_to(position + Vector2.DOWN * KICKOFF_PASS_DISTANCE, 0)

@@ -94,6 +94,7 @@ func _ready() -> void:
 	spawn_position = position
 	tackle_hitbox.body_entered.connect(_on_tackle_player)
 	GameEvents.team_scored.connect(_on_team_scored)
+	GameEvents.game_over.connect(_on_game_over)
 	var initial_position := kickoff_position if country == GameManager.countries[0] else spawn_position
 	var data := PlayerStateData.build().set_reset_position(initial_position)
 	switch_state(State.RESETING, data)
@@ -259,3 +260,10 @@ func _on_team_scored(country_scored_on: String) -> void:
 		switch_state(State.MOURNING)
 	else:
 		switch_state(State.CELEBRATING)
+		
+		
+func _on_game_over(winning_team: String) -> void:
+	if winning_team == country:
+		switch_state(State.CELEBRATING)
+	else:
+		switch_state(State.MOURNING)

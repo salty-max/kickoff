@@ -69,6 +69,7 @@ func _spawn_player(_player_position: Vector2, _own_goal: Goal, _target_goal: Goa
 	
 	
 func _setup_control_schemes() -> void:
+	_reset_control_schemes()
 	var p1_country := GameManager.player_setup[0]
 	if GameManager.is_coop():
 		var player_team := home_team if home_team[0].country == p1_country else away_team
@@ -82,6 +83,12 @@ func _setup_control_schemes() -> void:
 		var p2_team := home_team if p1_team == away_team else away_team
 		p1_team[5].set_control_scheme(Player.ControlScheme.P1)
 		p2_team[5].set_control_scheme(Player.ControlScheme.P2)
+		
+		
+func _reset_control_schemes() -> void:
+	for team in [home_team, away_team]:
+		for player: Player in team:
+			player.set_control_scheme(Player.ControlScheme.CPU)
 	
 	
 func _check_for_kickoff_readiness() -> void:

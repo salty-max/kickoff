@@ -32,6 +32,23 @@ func get_home_country() -> String:
 func get_away_country() -> String:
 	return countries[1]
 	
+	
+func get_winner_country() -> String:
+	assert(not is_game_tied())
+	return countries[0] if score[0] > score[1] else countries[1]
+	
+	
+func is_game_tied() -> bool:
+	return score[0] == score[1]
+	
+	
+func is_time_up() -> bool:
+	return time_left <= 0
+	
+	
+func has_someone_scored() -> bool:
+	return score[0] > 0 or score[1] > 0
+
 
 func add_to_score(_team_scored_on: String) -> void:
 	var scoring_team_idx := 1 if _team_scored_on == countries[0] else 0

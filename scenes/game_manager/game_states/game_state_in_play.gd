@@ -8,8 +8,8 @@ func _enter_tree() -> void:
 
 func _physics_process(delta: float) -> void:
 	manager.time_left -= delta * 1000.0
-	if manager.time_left <= 0:
-		if manager.score[0] == manager.score[1]:
+	if manager.is_time_up():
+		if manager.is_game_tied():
 			transition_to(GameManager.State.OVERTIME)
 		else:
 			transition_to(GameManager.State.GAME_OVER)
