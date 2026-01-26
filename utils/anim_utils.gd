@@ -1,4 +1,4 @@
-extends Node
+class_name AnimUtils
 
 enum PlayerAnim {
 	BICYCLE,
@@ -49,9 +49,9 @@ const BALL_ANIMS_MAP: Dictionary = {
 }
 
 
-func get_player_anim(anim: PlayerAnim) -> String:
+static func get_player_anim(anim: PlayerAnim) -> String:
 	return PLAYER_ANIMS_MAP[anim]
 	
 	
-func get_ball_anim(anim: BallAnim) -> String:
+static func get_ball_anim(anim: BallAnim) -> String:
 	return BALL_ANIMS_MAP[anim]

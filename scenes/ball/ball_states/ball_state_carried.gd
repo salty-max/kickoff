@@ -7,8 +7,13 @@ const DRIBBLE_INTENSITY := 3.0
 
 var dribble_time := 0.0
 
-func _ready() -> void:
+func _enter_tree() -> void:
 	assert(state_data.carrier != null, "Ball should have a carrier when entering CARRIED state")
+	GameEvents.ball_carried.emit(state_data.carrier.full_name)
+	
+	
+func _exit_tree() -> void:
+	GameEvents.ball_released.emit()
 	
 	
 func _physics_process(delta: float) -> void:

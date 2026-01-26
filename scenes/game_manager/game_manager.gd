@@ -12,9 +12,9 @@ enum State {
 	SCORED,
 }
 
-var countries: Array[String] = ["FRANCE", "JAPAN"]
+var countries: Array[String] = ["FRANCE", "BRAZIL"]
 var player_setup: Array[String] = ["FRANCE", ""]
-var score := [0, 0]
+var score: Array[int] = [0, 0]
 var time_left: float
 var state_factory := GameStateFactory.new()
 var current_state: GameState
@@ -36,6 +36,7 @@ func get_away_country() -> String:
 func add_to_score(_team_scored_on: String) -> void:
 	var scoring_team_idx := 1 if _team_scored_on == countries[0] else 0
 	score[scoring_team_idx] += 1
+	GameEvents.score_changed.emit()
 	
 	
 func set_away_team_score(_score: int) -> void:

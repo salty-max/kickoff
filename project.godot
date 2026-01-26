@@ -17,8 +17,6 @@ config/icon="uid://c51cvvp36bmy8"
 
 [autoload]
 
-KeyUtils="*res://utils/key_utils.gd"
-AnimUtils="*res://utils/anim_utils.gd"
 DataLoader="*res://utils/data_loader.gd"
 GameEvents="*res://scenes/game_events.gd"
 GameManager="*res://scenes/game_manager/game_manager.gd"
@@ -43,6 +41,11 @@ folder_colors={
 "res://shaders/": "pink",
 "res://utils/": "yellow"
 }
+
+[gui]
+
+theme/custom="uid://v82d0a74ap5l"
+theme/custom_font="uid://b7mi8h6bc0731"
 
 [input]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b5bnxvntsynd2"]
+[gd_scene load_steps=13 format=3 uid="uid://b5bnxvntsynd2"]
 
 [ext_resource type="Texture2D" uid="uid://dt16qdo3fdavv" path="res://assets/art/backgrounds/pitch-background.png" id="1_nnsk1"]
 [ext_resource type="Texture2D" uid="uid://c8ohvhvsvjcff" path="res://assets/art/backgrounds/pitch-pattern.png" id="2_4wyf3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b2rutwdqkx0fs" path="res://assets/art/backgrounds/top-wall.png" id="8_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://da4pfritu6ap1" path="res://assets/art/backgrounds/bottom-wall.png" id="9_w7kh3"]
 [ext_resource type="Texture2D" uid="uid://8yj8ws76502t" path="res://assets/art/backgrounds/side-wall.png" id="10_e3hyu"]
+[ext_resource type="PackedScene" uid="uid://bgc6hs108x00w" path="res://scenes/ui/ui.tscn" id="11_e3hyu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w7kh3"]
 size = Vector2(802, 7)
@@ -142,3 +143,5 @@ position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 script = ExtResource("6_qfnet")
 ball = NodePath("../Actors/Ball")
+
+[node name="UI" parent="." instance=ExtResource("11_e3hyu")]

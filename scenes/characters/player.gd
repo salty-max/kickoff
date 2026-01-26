@@ -198,7 +198,6 @@ func set_control_texture() -> void:
 	
 func set_control_scheme(scheme: ControlScheme) -> void:
 	control_scheme = scheme
-	print(ControlScheme.keys()[control_scheme])
 	set_control_texture()
 	
 
