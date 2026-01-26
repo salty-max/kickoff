@@ -18,6 +18,10 @@ var time_since_last_cache := 0.0
 var is_checking_for_kickoff_readiness := false
 
 
+func _init() -> void:
+	GameEvents.team_reset.connect(_on_team_reset)
+
+
 func _ready() -> void:
 	time_since_last_cache = 0.0
 	home_team = _spawn_players(GameManager.get_home_country(), home_goal)
@@ -27,11 +31,7 @@ func _ready() -> void:
 	away_team = _spawn_players(GameManager.get_away_country(), away_goal)
 	away_goal.init(GameManager.get_away_country())
 	
-	var player: Player = get_children().filter(func(p): return p is Player)[4]
-	player.control_scheme = Player.ControlScheme.P1
-	player.set_control_texture()
-	
-	GameEvents.team_reset.connect(_on_team_reset)
+	_setup_control_schemes()
 	
 	
 func _physics_process(delta: float) -> void:
@@ -68,12 +68,29 @@ func _spawn_player(_player_position: Vector2, _own_goal: Goal, _target_goal: Goa
 	return player
 	
 	
+func _setup_control_schemes() -> void:
+	var p1_country := GameManager.player_setup[0]
+	if GameManager.is_coop():
+		var player_team := home_team if home_team[0].country == p1_country else away_team
+		player_team[4].set_control_scheme(Player.ControlScheme.P1)
+		player_team[5].set_control_scheme(Player.ControlScheme.P2)
+	elif GameManager.is_single_player():
+		var player_team := home_team if home_team[0].country == p1_country else away_team
+		player_team[5].set_control_scheme(Player.ControlScheme.P1)
+	else:
+		var p1_team := home_team if home_team[0].country == p1_country else away_team
+		var p2_team := home_team if p1_team == away_team else away_team
+		p1_team[5].set_control_scheme(Player.ControlScheme.P1)
+		p2_team[5].set_control_scheme(Player.ControlScheme.P2)
+	
+	
 func _check_for_kickoff_readiness() -> void:
 	for team in [home_team, away_team]:
 		for player: Player in team:
 			if not player.is_ready_for_kickoff():
 				return
 				
+	_setup_control_schemes()
 	is_checking_for_kickoff_readiness = false
 	GameEvents.kickoff_ready.emit()
 	
@@ -102,10 +119,8 @@ func _on_player_swap_requested(requester: Player) -> void:
 	var closest_cpu_to_ball: Player = cpu_players[0]
 	if closest_cpu_to_ball.position.distance_squared_to(ball.position) < requester.position.distance_squared_to(ball.position):
 		var player_control_scheme := requester.control_scheme
-		requester.control_scheme = Player.ControlScheme.CPU
-		requester.set_control_texture()
-		closest_cpu_to_ball.control_scheme = player_control_scheme
-		closest_cpu_to_ball.set_control_texture()
+		requester.set_control_scheme(Player.ControlScheme.CPU)
+		closest_cpu_to_ball.set_control_scheme(player_control_scheme)
 		
 		
 func _on_team_reset() -> void:

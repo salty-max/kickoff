@@ -13,6 +13,7 @@ enum State {
 }
 
 var countries: Array[String] = ["FRANCE", "JAPAN"]
+var player_setup: Array[String] = ["FRANCE", ""]
 var score := [0, 0]
 var time_left: float
 var state_factory := GameStateFactory.new()
@@ -21,7 +22,7 @@ var current_state: GameState
 
 func _ready() -> void:
 	time_left = GAME_DURATION
-	switch_state(State.IN_PLAY)
+	switch_state(State.RESET)
 	
 	
 func get_home_country() -> String:
@@ -52,3 +53,11 @@ func switch_state(state: State, state_data: GameStateData = GameStateData.new())
 	current_state.name = str("State: ", State.keys()[state])
 	
 	call_deferred("add_child", current_state)
+	
+	
+func is_coop() -> bool:
+	return player_setup[0] == player_setup[1]
+	
+	
+func is_single_player() -> bool:
+	return player_setup[1].is_empty()

@@ -91,10 +91,12 @@ func _ready() -> void:
 	permanent_damage_emitter_area.monitoring = role == Role.GOALKEEPER
 	permanent_damage_emitter_area.body_entered.connect(_on_tackle_player)
 	goalie_hands_collider.disabled = role != Role.GOALKEEPER
-	switch_state(State.MOVING)
 	spawn_position = position
 	tackle_hitbox.body_entered.connect(_on_tackle_player)
 	GameEvents.team_scored.connect(_on_team_scored)
+	var initial_position := kickoff_position if country == GameManager.countries[0] else spawn_position
+	var data := PlayerStateData.build().set_reset_position(initial_position)
+	switch_state(State.RESETING, data)
 
 
 func _physics_process(delta: float) -> void:
@@ -192,6 +194,12 @@ func set_sprites_visibility() -> void:
 		
 func set_control_texture() -> void:
 	control_sprite.texture = CONTROL_SCHEME_SPRITES_MAP[control_scheme]
+	
+	
+func set_control_scheme(scheme: ControlScheme) -> void:
+	control_scheme = scheme
+	print(ControlScheme.keys()[control_scheme])
+	set_control_texture()
 	
 
 func update_animation(anim_name: String) -> void:

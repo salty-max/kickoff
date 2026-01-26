@@ -68,10 +68,10 @@ position = Vector2(-235, 40)
 position = Vector2(-125, 0)
 
 [node name="Forward1" type="Node2D" parent="Actors/Spawns"]
-position = Vector2(-40, 60)
+position = Vector2(-40, -60)
 
 [node name="Forward2" type="Node2D" parent="Actors/Spawns"]
-position = Vector2(-40, -60)
+position = Vector2(-40, 60)
 
 [node name="PitchObjects" type="Node2D" parent="Actors"]
 y_sort_enabled = true

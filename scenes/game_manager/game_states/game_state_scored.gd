@@ -15,4 +15,4 @@ func _physics_process(delta: float) -> void:
 	elapsed_time += delta * 1000.0
 	if elapsed_time > CELEBRATION_DURATION:
 		elapsed_time = 0.0
-		transition_to(GameManager.State.RESET)
+		transition_to(GameManager.State.RESET, state_data)
