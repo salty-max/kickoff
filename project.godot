@@ -21,6 +21,7 @@ KeyUtils="*res://utils/key_utils.gd"
 AnimUtils="*res://utils/anim_utils.gd"
 DataLoader="*res://utils/data_loader.gd"
 GameEvents="*res://scenes/game_events.gd"
+GameManager="*res://scenes/game_manager/game_manager.gd"
 
 [display]
 

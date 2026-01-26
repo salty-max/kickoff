@@ -50,7 +50,7 @@ func _process(_delta: float) -> void:
 	shadow.scale = Vector2(s, s)
 
 
-func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.new()) -> void:
+func switch_state(state: State, state_data: BallStateData = BallStateData.new()) -> void:
 	if current_state:
 		current_state.queue_free()
 	
@@ -58,7 +58,7 @@ func switch_state(state: Ball.State, state_data: BallStateData = BallStateData.n
 	var ctx := BallStateContext.build().set_ball(self).set_player_detection_area(player_detection_area).set_state_data(state_data)
 	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
-	current_state.name = str("State: ", Ball.State.keys()[state])
+	current_state.name = str("State: ", State.keys()[state])
 	
 	call_deferred("add_child", current_state)
 	
@@ -67,7 +67,7 @@ func shoot(shot_velocity: Vector2, shot_height: float = SHOT_HEIGHT) -> void:
 	velocity = shot_velocity
 	set_carrier()
 	var data := BallStateData.build().set_shot_height(shot_height)
-	switch_state(Ball.State.SHOT, data)
+	switch_state(State.SHOT, data)
 	
 	
 func pass_to(destination: Vector2) -> void:
@@ -79,7 +79,7 @@ func pass_to(destination: Vector2) -> void:
 		height_velocity = GRAVITY * distance / (1.85 * intensity)
 	set_carrier()
 	var data := BallStateData.build().set_lock_duration(PASS_LOCK_DURATION)
-	switch_state(Ball.State.FREEFORM, data)
+	switch_state(State.FREEFORM, data)
 	
 	
 func tumble(tumble_velocity: Vector2) -> void:
@@ -87,7 +87,7 @@ func tumble(tumble_velocity: Vector2) -> void:
 	velocity = tumble_velocity
 	height_velocity = TUMBLE_HEIGHT_VELOCITY
 	var data := BallStateData.build().set_lock_duration(TUMBLE_LOCK_DURATION)
-	switch_state(Ball.State.FREEFORM, data)
+	switch_state(State.FREEFORM, data)
 	
 	
 func stop() -> void:

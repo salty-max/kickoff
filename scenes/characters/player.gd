@@ -4,8 +4,6 @@ extends CharacterBody2D
 @warning_ignore("unused_signal")
 signal swap_requested(player: Player)
 
-const COUNTRIES := ["DEFAULT", "FRANCE", "ARGENTINA", "BRAZIL", "ENGLAND", "GERMANY", "ITALY", "SPAIN", "USA", "CANADA", "JAPAN", "PORTUGAL"]
-
 const CONTROL_SCHEME_SPRITES_MAP: Dictionary = {
 	ControlScheme.CPU: preload("res://assets/art/props/cpu.png"),
 	ControlScheme.P1: preload("res://assets/art/props/1p.png"),
@@ -70,8 +68,8 @@ enum SkinColor {
 
 var full_name: String
 var country: String
-var role: Player.Role
-var skin_color: Player.SkinColor
+var role: Role
+var skin_color: SkinColor
 var facing := Vector2.RIGHT
 var height := 0.0
 var height_velocity := 0.0
@@ -129,8 +127,8 @@ func setup_ai_behavior() -> void:
 func set_shader_properties() -> void:
 	sprite.material.set_shader_parameter("team_palette", load("res://assets/art/palettes/teams-color-palette.png"))
 	sprite.material.set_shader_parameter("skin_color", skin_color)
-	var country_color := COUNTRIES.find(country)
-	country_color = clampi(country_color, 0, COUNTRIES.size() - 1)
+	var country_color := GameManager.COUNTRIES.find(country)
+	country_color = clampi(country_color, 0, GameManager.COUNTRIES.size() - 1)
 	sprite.material.set_shader_parameter("team_color", country_color)
 
 
@@ -146,14 +144,13 @@ func process_gravity(delta: float) -> void:
 	
 func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.new()) -> void:
 	if current_state != null:
-		remove_child(current_state)
 		current_state.queue_free()
 	
 	current_state = state_factory.get_fresh_state(state)
 	var ctx := PlayerStateContext.build().set_player(self).set_ball(ball).set_teammate_detection_area(teammate_detection_area).set_ball_detection_area(ball_detection_area).set_state_data(state_data).set_target_goal(target_goal).set_ai_behavior(current_ai_behavior).set_tackle_hitbox(tackle_hitbox)
 	current_state.setup(ctx)
 	current_state.state_transition_requested.connect(switch_state.bind())
-	current_state.name = str("State: ", Player.State.keys()[state])
+	current_state.name = str("State: ", State.keys()[state])
 	
 	call_deferred("add_child", current_state)
 		
@@ -199,18 +196,18 @@ func has_ball() -> bool:
 	
 func control_ball() -> void:
 	if ball.height > BALL_CONTROL_MAX_HEIGHT:
-		switch_state(Player.State.CHEST_CONTROL)
+		switch_state(State.CHEST_CONTROL)
 		
 		
 func get_hurt(hurt_origin: Vector2) -> void:
 	var data := PlayerStateData.build().set_hurt_direction(hurt_origin)
-	switch_state(Player.State.HURT, data)
+	switch_state(State.HURT, data)
 	
 	
 func get_pass_request(player: Player) -> void:
 	if ball.get_carrier() == self and current_state != null and current_state.can_pass():
 		var data := PlayerStateData.build().set_pass_target(player)
-		switch_state(Player.State.PASSING, data)
+		switch_state(State.PASSING, data)
 		
 		
 func is_facing_target_goal() -> bool:
@@ -230,6 +227,6 @@ func _on_animation_complete() -> void:
 		
 func _on_team_scored(country_scored_on: String) -> void:
 	if country_scored_on == country:
-		switch_state(Player.State.MOURNING)
+		switch_state(State.MOURNING)
 	else:
-		switch_state(Player.State.CELEBRATING)
+		switch_state(State.CELEBRATING)

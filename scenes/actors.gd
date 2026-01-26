@@ -9,10 +9,6 @@ const PLAYER_SCENE := preload("res://scenes/characters/player.tscn")
 @export var home_goal: Goal
 @export var away_goal: Goal
 
-@export_category("Playing Teams")
-@export var home_country: String
-@export var away_country: String
-
 @onready var spawns: Node2D = $Spawns
 
 var home_team: Array[Player] = []
@@ -22,11 +18,11 @@ var time_since_last_cache := 0.0
 
 func _ready() -> void:
 	time_since_last_cache = 0.0
-	home_team = _spawn_players(home_country, home_goal)
-	home_goal.init(home_country)
+	home_team = _spawn_players(GameManager.get_home_country(), home_goal)
+	home_goal.init(GameManager.get_home_country())
 	spawns.scale.x = -1
-	away_team = _spawn_players(away_country, away_goal)
-	away_goal.init(away_country)
+	away_team = _spawn_players(GameManager.get_away_country(), away_goal)
+	away_goal.init(GameManager.get_away_country())
 	
 	var player: Player = get_children().filter(func(p): return p is Player)[4]
 	player.control_scheme = Player.ControlScheme.P1
