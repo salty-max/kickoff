@@ -27,7 +27,6 @@ func _init() -> void:
 
 func _ready() -> void:
 	time_left = GAME_DURATION
-	switch_state(State.RESET)
 	GameEvents.impact_received.connect(_on_impact_received)
 	time_since_paused = Time.get_ticks_msec()
 	
@@ -35,6 +34,34 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if get_tree().paused and Time.get_ticks_msec() - time_since_paused > IMPACT_PAUSE_DURATION:
 		get_tree().paused = false
+		
+		
+func start_game() -> void:
+	switch_state(State.RESET)
+	
+	
+func switch_state(state: State, state_data: GameStateData = GameStateData.new()) -> void:
+	if current_state != null:
+		current_state.queue_free()
+	
+	current_state = state_factory.get_fresh_state(state)
+	var ctx := GameStateContext.build().set_manager(self).set_state_data(state_data)
+	current_state.setup(ctx)
+	current_state.state_transition_requested.connect(switch_state.bind())
+	current_state.name = str("State: ", State.keys()[state])
+	
+	call_deferred("add_child", current_state)
+	
+	
+func add_to_score(_team_scored_on: String) -> void:
+	var scoring_team_idx := 1 if _team_scored_on == countries[0] else 0
+	score[scoring_team_idx] += 1
+	GameEvents.score_changed.emit()
+	
+	
+func set_away_team_score(_score: int) -> void:
+	score[1] = _score
+	
 	
 func get_home_country() -> String:
 	return countries[0]
@@ -59,29 +86,6 @@ func is_time_up() -> bool:
 	
 func has_someone_scored() -> bool:
 	return score[0] > 0 or score[1] > 0
-
-
-func add_to_score(_team_scored_on: String) -> void:
-	var scoring_team_idx := 1 if _team_scored_on == countries[0] else 0
-	score[scoring_team_idx] += 1
-	GameEvents.score_changed.emit()
-	
-	
-func set_away_team_score(_score: int) -> void:
-	score[1] = _score
-	
-	
-func switch_state(state: State, state_data: GameStateData = GameStateData.new()) -> void:
-	if current_state != null:
-		current_state.queue_free()
-	
-	current_state = state_factory.get_fresh_state(state)
-	var ctx := GameStateContext.build().set_manager(self).set_state_data(state_data)
-	current_state.setup(ctx)
-	current_state.state_transition_requested.connect(switch_state.bind())
-	current_state.name = str("State: ", State.keys()[state])
-	
-	call_deferred("add_child", current_state)
 	
 	
 func is_coop() -> bool:

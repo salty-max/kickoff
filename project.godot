@@ -15,14 +15,14 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="kickoff"
-run/main_scene="res://scenes/world.tscn"
+run/main_scene="uid://3clj2t67o33f"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://c51cvvp36bmy8"
 
 [autoload]
 
 DataLoader="*res://utils/data_loader.gd"
-GameEvents="*res://scenes/game_events.gd"
+GameEvents="*res://scenes/screens/world/game_events.gd"
 GameManager="*res://scenes/game_manager/game_manager.gd"
 SoundPlayer="*uid://cyme844h8bxne"
 
