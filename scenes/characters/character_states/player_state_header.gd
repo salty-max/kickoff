@@ -22,4 +22,5 @@ func _physics_process(_delta: float) -> void:
 	
 func _on_ball_entered(incoming_ball: Ball) -> void:
 	if incoming_ball.can_air_connect(AIR_CONNECT_MIN_HEIGHT, AIR_CONNECT_MAX_HEIGHT):
+		SoundPlayer.play(SoundPlayer.Sound.POWERSHOT)
 		incoming_ball.shoot(player.velocity.normalized() * player.power * BONUS_POWER_MULTIPLIER, player.height)

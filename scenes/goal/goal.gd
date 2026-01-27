@@ -42,5 +42,6 @@ func _on_ball_entered_back_net(ball: Ball) -> void:
 	
 	
 func _on_ball_entered_scoring_area(_ball: Ball) -> void:
+	SoundPlayer.play(SoundPlayer.Sound.WHISTLE)
 	GameEvents.team_scored.emit(country)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bqw708e80bn5f"]
+[gd_scene format=3 uid="uid://bqw708e80bn5f"]
 
 [ext_resource type="Texture2D" uid="uid://dumamwplaaf13" path="res://assets/art/props/soccer-ball.png" id="1_nv6q1"]
 [ext_resource type="Script" uid="uid://bcxhy4mn0i0hx" path="res://scenes/ball/ball.gd" id="1_stoaj"]
@@ -87,18 +87,18 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_jbgth"]
 radius = 60.0
 
-[node name="Ball" type="AnimatableBody2D"]
+[node name="Ball" type="AnimatableBody2D" unique_id=936821046]
 collision_layer = 4
 collision_mask = 33
 sync_to_physics = false
 script = ExtResource("1_stoaj")
 
-[node name="Shadow" type="Sprite2D" parent="."]
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1356665295]
 texture = ExtResource("2_stoaj")
 centered = false
 offset = Vector2(-8, -16)
 
-[node name="ShotParticles" type="GPUParticles2D" parent="."]
+[node name="ShotParticles" type="GPUParticles2D" parent="." unique_id=1245288768]
 position = Vector2(0, -8)
 emitting = false
 amount = 30
@@ -106,45 +106,43 @@ texture = ExtResource("3_xotqv")
 lifetime = 0.3
 process_material = SubResource("ParticleProcessMaterial_a81tc")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1631962347]
 texture = ExtResource("1_nv6q1")
 centered = false
 offset = Vector2(-5, -10)
 hframes = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2000199287]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_xotqv")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_r8c1m")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1206118770]
+libraries/ = SubResource("AnimationLibrary_r8c1m")
+autoplay = &"idle"
 
-[node name="PlayerDetectionArea" type="Area2D" parent="."]
+[node name="PlayerDetectionArea" type="Area2D" parent="." unique_id=2084957940]
 position = Vector2(0, -5)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" unique_id=704847151]
 shape = SubResource("CircleShape2D_rp1mh")
 debug_color = Color(0.36479428, 0.60683644, 0.32373077, 0.41960785)
 
-[node name="ScoringRaycast" type="RayCast2D" parent="."]
+[node name="ScoringRaycast" type="RayCast2D" parent="." unique_id=1961077717]
 position = Vector2(0, -5)
 target_position = Vector2(80, 0)
 collision_mask = 16
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="PlayerProximityArea" type="Area2D" parent="."]
+[node name="PlayerProximityArea" type="Area2D" parent="." unique_id=1770537406]
 position = Vector2(0, -5)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerProximityArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerProximityArea" unique_id=657117843]
 shape = SubResource("CircleShape2D_jbgth")
 debug_color = Color(0.6494231, 0.37874416, 0.90508777, 0.41960785)

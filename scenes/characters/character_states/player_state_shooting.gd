@@ -8,6 +8,7 @@ func _enter_tree() -> void:
 	
 func shoot_ball() -> void:
 	ball.shoot(state_data.shot_direction * state_data.shot_power)
+	SoundPlayer.play(SoundPlayer.Sound.SHOT)
 	
 	
 func on_animation_complete() -> void:
