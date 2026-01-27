@@ -267,6 +267,7 @@ offset_top = 20.0
 offset_right = 164.0
 offset_bottom = 85.0
 texture = ExtResource("2_kj8vl")
+stretch_mode = 2
 
 [node name="Mask" type="TextureRect" parent="Background" unique_id=1405086608]
 modulate = Color(0, 0, 0, 0.7882353)

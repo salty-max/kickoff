@@ -13,7 +13,7 @@ enum State {
 }
 
 var countries: Array[String] = ["FRANCE", "BRAZIL"]
-var player_setup: Array[String] = ["FRANCE", ""]
+var player_setup: Array[String] = ["FRANCE", "BRAZIL"]
 var score: Array[int] = [0, 0]
 var time_left: float
 var state_factory := GameStateFactory.new()

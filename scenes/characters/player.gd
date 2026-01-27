@@ -70,6 +70,7 @@ enum SkinColor {
 @onready var root_particles: Node2D = %RootParticles
 @onready var run_particles: GPUParticles2D = %RunParticles
 
+
 var full_name: String
 var country: String
 var role: Role
@@ -136,8 +137,9 @@ func setup_ai_behavior() -> void:
 func set_shader_properties() -> void:
 	sprite.material.set_shader_parameter("team_palette", load("res://assets/art/palettes/teams-color-palette.png"))
 	sprite.material.set_shader_parameter("skin_color", skin_color)
-	var country_color := DataLoader.get_countries().find(country)
-	country_color = clampi(country_color, 0, DataLoader.get_countries().size() - 1)
+	var countries := DataLoader.get_countries()
+	var country_color := countries.find(country)
+	country_color = clampi(country_color, 0, countries.size() - 1)
 	sprite.material.set_shader_parameter("team_color", country_color)
 
 
