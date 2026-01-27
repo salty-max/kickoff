@@ -136,8 +136,8 @@ func setup_ai_behavior() -> void:
 func set_shader_properties() -> void:
 	sprite.material.set_shader_parameter("team_palette", load("res://assets/art/palettes/teams-color-palette.png"))
 	sprite.material.set_shader_parameter("skin_color", skin_color)
-	var country_color := GameManager.COUNTRIES.find(country)
-	country_color = clampi(country_color, 0, GameManager.COUNTRIES.size() - 1)
+	var country_color := DataLoader.get_countries().find(country)
+	country_color = clampi(country_color, 0, DataLoader.get_countries().size() - 1)
 	sprite.material.set_shader_parameter("team_color", country_color)
 
 
