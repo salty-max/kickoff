@@ -18,7 +18,7 @@ func on_animation_complete() -> void:
 		var direction := player.position.direction_to(pass_target.position)
 		if sign(player.facing.x) != sign(direction.x):
 			player.facing *= -1
-		ball.pass_to(pass_target.position + pass_target.velocity * 0.8)
+		ball.pass_to(pass_target.position, Ball.PASS_LOCK_DURATION)
 		
 	transition_to(Player.State.MOVING)
 	

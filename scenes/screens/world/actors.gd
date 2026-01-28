@@ -26,12 +26,12 @@ func _init() -> void:
 
 func _ready() -> void:
 	time_since_last_cache = 0.0
-	home_team = _spawn_players(GameManager.get_home_country(), home_goal)
-	home_goal.init(GameManager.get_home_country())
+	home_team = _spawn_players(GameManager.current_match.home_team, home_goal)
+	home_goal.init(GameManager.current_match.home_team)
 	spawns.scale.x = -1
 	kickoffs.scale.x = -1
-	away_team = _spawn_players(GameManager.get_away_country(), away_goal)
-	away_goal.init(GameManager.get_away_country())
+	away_team = _spawn_players(GameManager.current_match.away_team, away_goal)
+	away_goal.init(GameManager.current_match.away_team)
 	
 	_setup_control_schemes()
 	

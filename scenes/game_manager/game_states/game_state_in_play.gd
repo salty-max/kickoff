@@ -9,7 +9,7 @@ func _enter_tree() -> void:
 func _physics_process(delta: float) -> void:
 	manager.time_left -= delta * 1000.0
 	if manager.is_time_up():
-		if manager.is_game_tied():
+		if manager.current_match.is_tied():
 			transition_to(GameManager.State.OVERTIME)
 		else:
 			transition_to(GameManager.State.GAME_OVER)

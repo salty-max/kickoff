@@ -12,11 +12,10 @@ enum State {
 	SCORED,
 }
 
-var countries: Array[String] = ["FRANCE", "BRAZIL"]
 var player_setup: Array[String] = ["FRANCE", "BRAZIL"]
-var score: Array[int] = [0, 0]
 var time_left: float
 var state_factory := GameStateFactory.new()
+var current_match: Match = null
 var current_state: GameState
 var time_since_paused := Time.get_ticks_msec()
 
@@ -54,38 +53,17 @@ func switch_state(state: State, state_data: GameStateData = GameStateData.new())
 	
 	
 func add_to_score(_team_scored_on: String) -> void:
-	var scoring_team_idx := 1 if _team_scored_on == countries[0] else 0
-	score[scoring_team_idx] += 1
+	current_match.increase_score(_team_scored_on)
 	GameEvents.score_changed.emit()
 	
 	
-func set_away_team_score(_score: int) -> void:
-	score[1] = _score
-	
-	
-func get_home_country() -> String:
-	return countries[0]
-	
-	
-func get_away_country() -> String:
-	return countries[1]
-	
-	
 func get_winner_country() -> String:
-	assert(not is_game_tied())
-	return countries[0] if score[0] > score[1] else countries[1]
-	
-	
-func is_game_tied() -> bool:
-	return score[0] == score[1]
+	assert(not current_match.is_tied())
+	return current_match.winner
 	
 	
 func is_time_up() -> bool:
 	return time_left <= 0
-	
-	
-func has_someone_scored() -> bool:
-	return score[0] > 0 or score[1] > 0
 	
 	
 func is_coop() -> bool:
